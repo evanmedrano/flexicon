@@ -1,0 +1,64 @@
+// Type scale
+$fs-1: 1rem;
+$fs-2: 1.2rem;
+$fs-3: 1.4rem;
+$fs-4: 1.6rem;
+$fs-5: 1.8rem;
+$fs-6: 2.0rem;
+$fs-7: 2.4rem;
+$fs-8: 3.0rem;
+$fs-9: 3.6rem;
+$fs-10: 4.8rem;
+$fs-11: 6.0rem;
+$fs-12: 7.2rem;
+
+// Spacing scale (su = spacing unit)
+$su-1: .4rem;
+$su-2: .8rem;
+$su-3: 1.2rem;
+$su-4: 1.6rem;
+$su-5: 2.4rem;
+$su-6: 3.2rem;
+$su-7: 4.0rem;
+$su-8: 4.8rem;
+$su-9: 6.4rem;
+$su-10: 9.6rem;
+
+// Colors
+
+// Primary
+$primary-100: hsl(203, 90%, 94%);
+$primary-200: hsl(203, 90%, 85%);
+$primary-300: hsl(203, 90%, 65%);
+$primary-400: hsl(203, 90%, 45%);
+$primary-500: hsl(203, 90%, 36%);
+
+// Neutrals
+$neutral-100: hsl(149, 8%, 95%);
+$neutral-200: hsl(149, 8%, 80%);
+$neutral-300: hsl(149, 8%, 61%);
+$neutral-400: hsl(149, 8%, 45%);
+$neutral-500: hsl(149, 8%, 25%);
+
+// Accents
+$orange-100: hsl(40, 92%, 85%);
+$orange-200: hsl(40, 92%, 75%);
+$orange-300: hsl(40, 92%, 67%);
+$orange-400: hsl(40, 92%, 55%);
+$orange-500: hsl(40, 92%, 45%);
+
+$pink-100: hsl(303, 58%, 88%);
+$pink-200: hsl(303, 58%, 80%);
+$pink-300: hsl(303, 58%, 71%);
+$pink-400: hsl(303, 58%, 55%);
+$pink-500: hsl(303, 58%, 35%);
+
+$red-100: hsl(359, 93%, 85%);
+$red-200: hsl(359, 93%, 75%);
+$red-300: hsl(359, 93%, 65%);
+$red-400: hsl(359, 93%, 45%);
+$red-500: hsl(359, 93%, 25%);
+
+// Basic
+$black: hsl(0, 0, 0);
+$white: hsl(0, 0, 100%);
