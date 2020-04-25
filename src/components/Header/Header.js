@@ -21,7 +21,7 @@ function Header(props) {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const currentPageColor = props.pageColor === 'light' ? 'Night mode' : 'Light mode'
+  const currentPageColor = props.pageColor === 'light' ? '🌒' : '☀'
 
   const handlePageChange = () => {
     props.currentPageColor(currentPageColor)
@@ -38,41 +38,45 @@ function Header(props) {
          expand="md"
        >
          <Container>
-           <NavbarBrand tag={Link} to={"/"}>life doesn't suck</NavbarBrand>
+           <NavbarBrand tag={Link} to={"/"} className="header__brand">
+             flexicon
+           </NavbarBrand>
            <NavbarToggler onClick={toggle} />
            <Collapse isOpen={isOpen} navbar>
              <Nav className="mr-auto" navbar>
                <NavItem>
-                 <NavLink onClick={handlePageChange}>{currentPageColor}</NavLink>
+                 <NavLink onClick={handlePageChange} className="header__colors">
+                   {currentPageColor}
+                 </NavLink>
                </NavItem>
                <NavItem>
-                 <NavLink tag={Link} to={"/blog"}>Blog</NavLink>
+                 <NavLink tag={Link} to={"/brain-dump"}>brain dump</NavLink>
                </NavItem>
                <NavItem>
-                 <NavLink tag={Link} to={"/motivation"}>Motivation</NavLink>
+                 <NavLink tag={Link} to={"/word-play"}>word play</NavLink>
                </NavItem>
                <UncontrolledDropdown nav inNavbar>
                  <DropdownToggle nav caret>
-                   Options
+                   options
                  </DropdownToggle>
-                 <DropdownMenu right>
+                 <DropdownMenu right className="header__dropdown">
                    <DropdownItem>
-                     Option 1
+                     option 1
                    </DropdownItem>
                    <DropdownItem>
-                     Option 2
+                     option 2
                    </DropdownItem>
                    <DropdownItem>
-                     Option 3
+                     option 3
                    </DropdownItem>
                    <DropdownItem divider />
                    <DropdownItem>
-                     Reset
+                     reset
                    </DropdownItem>
                  </DropdownMenu>
                </UncontrolledDropdown>
              </Nav>
-             <NavbarText tag={Link} to={"/login"}>Log in</NavbarText>
+             <NavbarText tag={Link} to={"/login"}>log in</NavbarText>
            </Collapse>
         </Container>
        </Navbar>

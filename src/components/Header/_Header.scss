@@ -1,0 +1,19 @@
+.header {
+  font-size: $fs-5;
+
+  &__brand {
+    font-size: $fs-8;
+  }
+
+  &__colors {
+    font-size: $fs-5;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__dropdown {
+    font-size: $fs-5;
+  }
+}

@@ -1,0 +1,14 @@
+.footer {
+  @include padding($su-6, null, $su-6, null);
+  font-size: $fs-5;
+  text-align: center;
+
+  &__headline {
+    font-size: $fs-7;
+  }
+
+  hr {
+    @include margin(null, auto, null, auto);
+    width: 50%;
+  }
+}
