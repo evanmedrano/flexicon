@@ -1,54 +1,54 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
-
-const base_uri = 'http://localhost:3030/api/v1'
+import {
+  InstrumentalDetail,
+  InstrumentalList,
+  InstrumentalSearch,
+  Mic
+} from '../../components';
+import { Word } from '../../components';
+import rails from '../../apis/rails';
 
 function WordPlay() {
+  const [error, setError] = useState(null);
   const [instrumental, setInstrumental] = useState(null);
-  const [query, setQuery] = useState('');
+  const [instrumentals, setInstrumentals] = useState([]);
+  const [record, setRecord] = useState(false)
   const [word, setWord] = useState(null);
 
   const intervalId = useRef();
 
-  function handleFormSubmit(event) {
-    event.preventDefault()
-
-    handleInstrumentalRequest(query)
-  }
-
-  async function handleInstrumentalRequest(query) {
-    console.log(query)
-
-    const response = await axios({
-      baseURL: base_uri,
-      method: 'get',
-      url: '/instrumentals',
-      params: {
-        q: query
-      }
-    })
-    setInstrumental(response.data.data[0].preview);
-  };
-
-  async function handleWordRequest() {
-    const response = await axios({
-      baseURL: base_uri,
-      method: 'get',
-      url: '/words'
-    })
-    setWord(response.data.word);
-  };
-
-  function handleInputChange(event) {
-    setQuery(event.target.value)
-  }
-
   useEffect(() => {
-    handleWordRequest()
+    handleInstrumentalsRequest();
+    handleWordRequest();
     intervalId.current = setInterval(() => handleWordRequest(), 10000);
     return () => clearInterval(intervalId.current);
   }, []);
+
+  const handleWordRequest = () => {
+    rails
+      .get('/words')
+      .then(response => setWord(response.data.word))
+      .catch(error => setError(error));
+  };
+
+  const handleInstrumentalsRequest = () => {
+    rails
+      .get('/instrumentals')
+      .then(response => setInstrumentals(response.data))
+      .catch(error => setError(error));
+  };
+
+  const handleFormSubmit = search => {
+    rails
+      .get(`instrumentals/${search}`)
+      .then(response => setInstrumental(response.data.data[0]))
+      .catch(error => setError(error));
+  };
+
+  const handleInstrumentalSelect = instrumental => {
+    setInstrumental(instrumental);
+  };
 
   const startWordLoop = () => {
     intervalId.current = setInterval(() => handleWordRequest(), 10000);
@@ -56,25 +56,38 @@ function WordPlay() {
 
   const stopWordLoop = () => clearInterval(intervalId.current);
 
+  const startRecording = () => {
+    setRecord(true);
+    console.log(record)
+  }
+
+  const stopRecording = () => {
+    setRecord(false);
+    console.log(record)
+  }
+
   return (
     <div className="word-play">
       <Container>
         <Row>
           <Col xs="6">
-            <h1 className="text-center">
-              {word === null ? 'Finding your new word' : word}
-            </h1>
-            <button onClick={stopWordLoop}>Stop</button>
-            <button onClick={startWordLoop}>Start</button>
+            <Word
+              error={error}
+              startWordLoop={startWordLoop}
+              stopWordLoop={stopWordLoop}
+              word={word}
+            />
+            <br/><br/>
+            <Mic />
           </Col>
           <Col xs="6">
-            <form onSubmit={handleFormSubmit}>
-              <input type="text" onChange={handleInputChange} value={query} />
-              <button>Search</button>
-            </form>
-            <video loop controls autoPlay key={instrumental}>
-              <source src={instrumental} type="audio/mpeg" />
-            </video>
+            <InstrumentalSearch handleFormSubmit={handleFormSubmit} />
+            <InstrumentalDetail instrumental={instrumental} />
+            <InstrumentalList
+              error={error}
+              instrumentals={instrumentals}
+              handleInstrumentalSelect={handleInstrumentalSelect}
+            />
           </Col>
         </Row>
       </Container>
