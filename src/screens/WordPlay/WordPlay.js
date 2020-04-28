@@ -13,6 +13,7 @@ function WordPlay() {
   const [error, setError] = useState(null);
   const [instrumental, setInstrumental] = useState(null);
   const [instrumentals, setInstrumentals] = useState([]);
+  const [nextInstrumental, setNextInstrumental] = useState(null);
   const [record, setRecord] = useState(false)
   const [word, setWord] = useState(null);
 
@@ -44,11 +45,24 @@ function WordPlay() {
       .get(`instrumentals/${search}`)
       .then(response => setInstrumental(response.data.data[0]))
       .catch(error => setError(error));
+
+    setNextInstrumental(instrumentals[0]);
   };
 
   const handleInstrumentalSelect = instrumental => {
     setInstrumental(instrumental);
+    handleNextInstrumental(instrumentals.indexOf(instrumental))
   };
+
+  const handleNextInstrumental = (index) => {
+    setNextInstrumental(instrumentals[index + 1])
+  }
+
+  const handleAudioEnding = (currentInstrumental) => {
+    const currentInstrumentalIndex = instrumentals.indexOf(currentInstrumental);
+    setInstrumental(instrumentals[currentInstrumentalIndex + 1])
+    setNextInstrumental(instrumentals[currentInstrumentalIndex + 2])
+  }
 
   const startWordLoop = () => {
     intervalId.current = setInterval(() => handleWordRequest(), 10000);
@@ -58,12 +72,10 @@ function WordPlay() {
 
   const startRecording = () => {
     setRecord(true);
-    console.log(record)
   }
 
   const stopRecording = () => {
     setRecord(false);
-    console.log(record)
   }
 
   return (
@@ -82,7 +94,11 @@ function WordPlay() {
           </Col>
           <Col xs="6">
             <InstrumentalSearch handleFormSubmit={handleFormSubmit} />
-            <InstrumentalDetail instrumental={instrumental} />
+            <InstrumentalDetail
+              instrumental={instrumental}
+              nextInstrumental={nextInstrumental}
+              handleAudioEnding={handleAudioEnding}
+            />
             <InstrumentalList
               error={error}
               instrumentals={instrumentals}
