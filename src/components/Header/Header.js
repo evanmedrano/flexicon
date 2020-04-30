@@ -77,6 +77,9 @@ function Header(props) {
               <NavbarText tag={Link} to={"/login"}>
                 log in
               </NavbarText>
+              <NavbarText tag={Link} to={"/signup"} className="ml-4">
+                sign up
+              </NavbarText>
             </Collapse>
           </Container>
         </Navbar>

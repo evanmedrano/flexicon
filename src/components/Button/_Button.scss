@@ -1,0 +1,106 @@
+.button {
+  @include padding($su-2, $su-4, $su-2, $su-4)
+
+  border-radius: .3rem;
+  display: inline-block;
+  position: relative;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &--primary {
+    background-color: $primary-300;
+    color: $neutral-100 !important;
+
+    &:hover {
+      background-color: $primary-400;
+    }
+  }
+
+  &--grey {
+    background-color: $neutral-200;
+    color: $neutral-400 !important;
+  }
+
+  &--orange {
+    background-color: $orange-300;
+    color: $neutral-400 !important;
+
+    &:hover {
+      background-color: $orange-200;
+    }
+  }
+
+  &--red {
+    background-color: $red-400;
+    color: $neutral-100 !important;
+
+    &:hover {
+      background-color: $red-300;
+    }
+  }
+
+  &--pink {
+    background-color: $pink-300;
+    color: $white !important;
+
+    &:hover {
+      background-color: $pink-200;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid $neutral-200;
+    color: $neutral-500;
+
+    &:hover {
+      background-color: $neutral-200;
+      color: $neutral-500;
+    }
+  }
+
+  &--large {
+    @include padding($su-3, $su-4, $su-3, $su-4);
+  }
+
+  &--round {
+    border-radius: 2.5rem;
+  }
+
+  &--wide {
+    width: 100%;
+  }
+
+  &--fb {
+    background-color: hsl(220, 43%, 41%);
+    color: hsl(0, 0, 100%);
+
+    &:hover {
+      background-color: hsl(220, 43%, 31%);
+      color: hsl(0, 0, 100%);
+    }
+  }
+
+  &--google {
+    border: 2px solid $neutral-300;
+    color: $neutral-400;
+
+    &:hover {
+      background-color: $neutral-200;
+      color: $neutral-400;
+    }
+  }
+
+  &__icon {
+    left: 2rem;
+    font-size: $fs-6;
+    position: absolute;
+    top: 1.2rem;
+  }
+}

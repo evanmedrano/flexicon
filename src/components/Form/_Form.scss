@@ -1,0 +1,65 @@
+.form {
+  @include margin($su-9, auto, $su-9, auto);
+  @include padding($su-4, $su-6, $su-4, $su-6);
+  background-color: hsl(0, 0, 100%);
+  border: 1px solid $neutral-200;
+  border-radius: 3rem;
+  color: $neutral-400;
+  font-size: $fs-4;
+  font-weight: 300;
+  max-width: 40rem;
+  text-align: center;
+
+  &--shadow {
+    border: none;
+    box-shadow: 0 .6rem 1.3rem;
+  }
+
+  &__divider {
+    @include margin($su-4, null, $su-3, null);
+    position: relative;
+
+    span::before {
+      margin-right: 2rem;
+      right: 50%;
+    }
+
+    span::after {
+      left: 50%;
+      margin-left: 2rem;
+    }
+
+    span::before,
+    span::after {
+      background: $neutral-200;
+      content: "";
+      height: .2rem;
+      position: absolute;
+      top: 50%;
+      width: 15rem;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-size: $fs-3;
+    text-align: left;
+  }
+
+  &__input {
+    @include padding($su-2, $su-3, $su-2, $su-3);
+    border: 1px solid $neutral-200;
+    border-radius: .3rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+
+    &:focus {
+      border: 1px solid $primary-300;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $neutral-300;
+    }
+  }
+}
