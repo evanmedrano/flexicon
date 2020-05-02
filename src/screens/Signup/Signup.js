@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
 import Form from 'react-validation/build/form';
@@ -7,9 +7,11 @@ import CheckButton from 'react-validation/build/button';
 
 import AuthService from '../../services/AuthService';
 import FlashService from '../../services/FlashService';
-import { required, email, password } from '../../utilities/form-validation';
+import { ErrorList } from '../../components';
+import { userSignedIn, required, email, password } from '../../utilities';
 
 function Signup() {
+  const [errors, setErrors] = useState([])
   const [form, setState] = useState({
     email: '',
     password: '',
@@ -18,6 +20,16 @@ function Signup() {
   const history = useHistory();
   const signupForm = useRef(null);
   const checkButton = useRef(null);
+
+  useEffect(() => {
+    setErrors([]);
+  }, [])
+
+  if (userSignedIn()) {
+    FlashService.set('message', 'You are already logged in.');
+    history.push('/');
+    return null;
+  }
 
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -32,6 +44,7 @@ function Signup() {
           FlashService.set('message', 'You have successfully signed up.');
           history.push('/login');
         })
+        .catch(error => { setErrors(error.response.data.errors.detail) })
     }
   }
 
@@ -43,6 +56,7 @@ function Signup() {
     <Container>
       <div className="form form--shadow">
         <h2 className="mb-5">Join Flexicon</h2>
+        <ErrorList errors={errors} />
 
         <Form
           ref={signupForm}

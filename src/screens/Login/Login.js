@@ -1,20 +1,31 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 
-import { FlashMessage } from '../../components';
+import { FlashMessage, ErrorList } from '../../components';
 import AuthService from '../../services/AuthService';
 import FlashService from '../../services/FlashService';
-import { required, email, password } from '../../utilities/form-validation';
+import { userSignedIn, required, email, password } from '../../utilities';
 
 function Login(props) {
+  const [errors, setErrors] = useState([])
   const [form, setState] = useState({ email: '', password: '' })
   const history = useHistory();
   const loginForm = useRef(null);
   const checkButton = useRef(null);
+
+  useEffect(() => {
+    setErrors([]);
+  }, [])
+
+  if (userSignedIn()) {
+    FlashService.set('message', 'You are already logged in.');
+    history.push('/');
+    return null
+  }
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -29,6 +40,7 @@ function Login(props) {
           FlashService.set('message', 'You have successfully logged in.');
           history.push('/');
         })
+        .catch(error => { setErrors(['Invalid email or password']) })
     }
   }
 
@@ -42,6 +54,7 @@ function Login(props) {
 
       <div className="form form--shadow">
         <h2 className="mb-5">Log in to Flexicon</h2>
+        <ErrorList errors={errors} />
 
         <Form ref={loginForm} onSubmit={handleFormSubmit} autocomplete="on">
           <div className="form__field">

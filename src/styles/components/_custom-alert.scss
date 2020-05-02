@@ -1,0 +1,20 @@
+.custom-alert {
+  @include padding($su-3, null, $su-3, null);
+  font-size: $fs-4;
+  font-weight: 700;
+
+  &--danger {
+    background-color: $red-100;
+    color: $red-500;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__message {
+    &:not(:last-child) {
+      margin-bottom: $su-2;
+    }
+  }
+}
