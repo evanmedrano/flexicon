@@ -29,21 +29,21 @@ function WordPlay() {
 
   const handleWordRequest = () => {
     rails
-      .get('/words', { headers: authHeader() })
+      .get('/words')
       .then(response => setWord(response.data.word))
       .catch(error => setError(error));
   };
 
   const handleInstrumentalsRequest = () => {
     rails
-      .get('/instrumentals', { headers: authHeader() })
+      .get('/instrumentals')
       .then(response => setInstrumentals(response.data))
       .catch(error => setError(error));
   };
 
   const handleFormSubmit = search => {
     rails
-      .get(`instrumentals/${search}`, { headers: authHeader() })
+      .get(`instrumentals/${search}`)
       .then(response => setInstrumental(response.data.data[0]))
       .catch(error => setError(error));
 

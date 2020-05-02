@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 import rails from '../apis/rails';
 
 class AuthService {
@@ -21,11 +23,10 @@ class AuthService {
       })
       .then(response => {
         if (response.headers.authorization) {
-          localStorage.setItem(
-            'token',
-            JSON.stringify(response.headers.authorization)
-          );
-          localStorage.setItem('user', JSON.stringify(response.data));
+          Cookies.set('token', JSON.stringify(response.headers.authorization), {
+            expires: 1
+          })
+          Cookies.set('user', JSON.stringify(response.data), { expires: 1 });
         }
 
         return response.data;
@@ -33,8 +34,8 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    Cookies.remove('token');
+    Cookies.remove('user');
     return rails.delete('/logout');
   }
 }

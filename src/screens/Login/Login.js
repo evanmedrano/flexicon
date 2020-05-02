@@ -40,13 +40,13 @@ function Login(props) {
 
         <Form ref={loginForm} onSubmit={handleFormSubmit} autocomplete="on">
           <div className="form__field">
-            <label for="email" className="form__label">
+            <label htmlFor="email" className="form__label">
               Email
             </label>
             <Input
               type="email"
               name="email"
-              autofocus
+              autoFocus
               className="form__input"
               onChange={handleInputChange}
               validations={[required, email]}
@@ -55,7 +55,7 @@ function Login(props) {
 
           <div class="form__field">
             <div className="d-flex justify-content-between">
-              <label for="password" className="form__label">
+              <label htmlFor="password" className="form__label">
                 Password
               </label>
               <Link to="#" className="form__label">

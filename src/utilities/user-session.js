@@ -1,5 +1,7 @@
+import Cookies from 'js-cookie';
+
 export function currentUser() {
-  return JSON.parse(localStorage.getItem('user'));
+  return Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null
 }
 
 export function userSignedIn() {
