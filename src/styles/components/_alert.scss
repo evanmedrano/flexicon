@@ -1,0 +1,9 @@
+.alert {
+  font-size: $fs-3;
+  font-weight: 700;
+
+  &--danger {
+    background-color: $red-100;
+    color: $red-500;
+  }
+}

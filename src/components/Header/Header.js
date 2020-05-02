@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
   Container,
   Collapse,
@@ -15,9 +15,12 @@ import {
   DropdownItem,
   NavbarText
 } from 'reactstrap';
+import AuthService from '../../services/AuthService';
+import { userSignedIn } from '../../utilities/user-session';
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -26,6 +29,42 @@ function Header(props) {
   const handlePageChange = () => {
     props.currentPageColor(currentPageColor);
   };
+
+  const renderUserLinks = () => {
+    if (userSignedIn()) {
+      return signedInLink()
+    } else {
+      return signedOutLinks()
+    }
+  }
+
+  const handleLogout = () => {
+    AuthService.logout()
+      .then(() => {
+        history.push('/login');
+      })
+  }
+
+  const signedInLink = () => {
+    return (
+      <NavbarText tag={Link} onClick={handleLogout}>
+        log out
+      </NavbarText>
+    )
+  }
+
+  const signedOutLinks = () => {
+    return (
+      <>
+        <NavbarText tag={Link} to={"/login"}>
+          log in
+        </NavbarText>
+        <NavbarText tag={Link} to={"/signup"} className="ml-4">
+          sign up
+        </NavbarText>
+      </>
+    )
+  }
 
   return (
     <>
@@ -74,12 +113,7 @@ function Header(props) {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-              <NavbarText tag={Link} to={"/login"}>
-                log in
-              </NavbarText>
-              <NavbarText tag={Link} to={"/signup"} className="ml-4">
-                sign up
-              </NavbarText>
+              {renderUserLinks()}
             </Collapse>
           </Container>
         </Navbar>

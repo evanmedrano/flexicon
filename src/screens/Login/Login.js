@@ -1,30 +1,55 @@
-import React from "react";
-import axios from "axios";
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
 
-function Login() {
-  const handleClick = () => {
-    window.location = "http://localhost:3030/api/v1/users/auth/facebook"
-  };
+import AuthService from '../../services/AuthService';
+import { required, email, password } from '../../utilities/form-validation';
+
+function Login(props) {
+  const [form, setState] = useState({ email: '', password: '' })
+  const history = useHistory();
+  const loginForm = useRef(null);
+  const checkButton = useRef(null);
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    loginForm.current.validateAll();
+
+    if (checkButton.current.context._errors.length === 0) {
+      const { email, password } = form;
+
+      AuthService.login(email, password)
+        .then(() => {
+          history.push('/');
+        })
+    }
+  }
+
+  const handleInputChange = (event) => {
+    setState({ ...form, [event.target.name]: event.target.value })
+  }
 
   return (
     <Container>
       <div className="form form--shadow">
         <h2 className="mb-5">Log in to Flexicon</h2>
 
-        <form autocomplete="on">
+        <Form ref={loginForm} onSubmit={handleFormSubmit} autocomplete="on">
           <div className="form__field">
             <label for="email" className="form__label">
               Email
             </label>
-            <input
+            <Input
               type="email"
               name="email"
               autofocus
               className="form__input"
+              onChange={handleInputChange}
+              validations={[required, email]}
             />
           </div>
 
@@ -37,34 +62,25 @@ function Login() {
                 Forgot password?
               </Link>
             </div>
-            <input type="password" name="password" className="form__input" />
+            <Input
+              type="password"
+              name="password"
+              className="form__input"
+              onChange={handleInputChange}
+              validations={[required, password]}
+            />
           </div>
 
           <div className="form__actions">
-            <button
+            <CheckButton
+              ref={checkButton}
               type="submit"
-              className="mb-5 button button--primary button--large button--round button--wide"
+              className="my-5 button button--primary button--large button--round button--wide"
             >
               Log in
-            </button>
+            </CheckButton>
           </div>
-        </form>
-
-        <Link
-          onClick={handleClick}
-          className="my-4 button button--fb button--large button--round button--wide"
-        >
-          <FontAwesomeIcon icon={faFacebook} className="button__icon" />
-          <span>Sign in with Facebook</span>
-        </Link>
-
-        <Link
-          to="localhost:3030/api/v1/users/auth/google_oauth2"
-          className="mb-5 button button--google button--large button--round button--wide"
-        >
-          <FontAwesomeIcon icon={faGoogle} className="button__icon" />
-          <span>Sign in with Google</span>
-        </Link>
+        </Form>
       </div>
     </Container>
   );

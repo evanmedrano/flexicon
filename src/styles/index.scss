@@ -6,9 +6,11 @@
 @import 'base/typography';
 @import 'base/utilities';
 
-@import '../components/Button/Button.scss';
+@import 'components/alert';
+@import 'components/button';
+@import 'components/form';
+
 @import '../components/Footer/Footer.scss';
-@import '../components/Form/Form.scss';
 @import '../components/Header/Header.scss';
 
 @import '../screens/BrainDump/BrainDump.scss';

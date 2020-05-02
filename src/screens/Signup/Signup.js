@@ -1,29 +1,36 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+
+import AuthService from '../../services/AuthService';
+import { required, email, password } from '../../utilities/form-validation';
 
 function Signup() {
   const [form, setState] = useState({
     email: '',
     password: '',
-    passwordConfirmation: ''
+    password_confirmation: ''
   })
+  const history = useHistory();
+  const signupForm = useRef(null);
+  const checkButton = useRef(null);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = event => {
     event.preventDefault();
 
-    axios.post('http://localhost:3030/api/v1/signup', {
-      user: {
-        email: form.email,
-        password: form.password,
-        password_confirmation: form.passwordConfirmation
-      }
-    })
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
+    signupForm.current.validateAll();
+
+    if (checkButton.current.context._errors.length === 0) {
+      const { email, password, password_confirmation } = form;
+
+      AuthService.register(email, password, password_confirmation)
+        .then(() => {
+          history.push('/login');
+        })
+    }
   }
 
   const handleInputChange = (event) => {
@@ -35,71 +42,62 @@ function Signup() {
       <div className="form form--shadow">
         <h2 className="mb-5">Join Flexicon</h2>
 
-        <Link
-          to="#"
-          className="mb-4 button button--fb button--large button--round button--wide"
+        <Form
+          ref={signupForm}
+          onSubmit={handleFormSubmit}
+          autocomplete="on"
         >
-          <FontAwesomeIcon icon={faFacebook} className="button__icon" />
-          <span>Sign up with Facebook</span>
-        </Link>
-
-        <Link
-          to="localhost:3030/api/v1/users/auth/google_oauth2"
-          className="mb-5 button button--google button--large button--round button--wide"
-        >
-          <FontAwesomeIcon icon={faGoogle} className="button__icon" />
-          <span>Sign up with Google</span>
-        </Link>
-
-        <form autocomplete="on" onSubmit={handleFormSubmit}>
           <div className="form__field">
-            <label for="email" className="form__label">
+            <label htmlFor="email" className="form__label">
               Email
             </label>
-            <input
+            <Input
               type="email"
               name="email"
               className="form__input"
               onChange={handleInputChange}
               value={form.email}
-            />
+              validations={[required, email]} />
           </div>
 
           <div class="form__field">
-            <label for="password" className="form__label">
+            <label htmlFor="password" className="form__label">
               Password
             </label>
-            <input
+            <Input
               type="password"
               name="password"
               className="form__input"
               onChange={handleInputChange}
               value={form.password}
+              validations={[required, password]}
             />
           </div>
 
           <div class="form__field">
-            <label for="passwordConfirmation" className="form__label">
+            <label htmlFor="passwordConfirmation" className="form__label">
               Password Confirmation
             </label>
-            <input
+            <Input
               type="password"
-              name="passwordConfirmation"
+              name="password_confirmation"
               className="form__input"
               onChange={handleInputChange}
-              value={form.passwordConfirmation}
+              value={form.password_confirmation}
+              validations={[required, password]}
             />
           </div>
 
           <div className="form__actions">
-            <button
+            <CheckButton
+              ref={checkButton}
               type="submit"
-              className="mb-5 button button--primary button--large button--round button--wide"
+              className="my-5 button button--primary button--large button--round button--wide"
             >
               Sign up
-            </button>
+            </CheckButton>
           </div>
-        </form>
+        </Form>
 
       </div>
     </Container>

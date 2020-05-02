@@ -8,6 +8,7 @@ import {
 } from '../../components';
 import { Word } from '../../components';
 import rails from '../../apis/rails';
+import authHeader from '../../services/auth-header';
 
 function WordPlay() {
   const [error, setError] = useState(null);
@@ -28,21 +29,21 @@ function WordPlay() {
 
   const handleWordRequest = () => {
     rails
-      .get('/words')
+      .get('/words', { headers: authHeader() })
       .then(response => setWord(response.data.word))
       .catch(error => setError(error));
   };
 
   const handleInstrumentalsRequest = () => {
     rails
-      .get('/instrumentals')
+      .get('/instrumentals', { headers: authHeader() })
       .then(response => setInstrumentals(response.data))
       .catch(error => setError(error));
   };
 
   const handleFormSubmit = search => {
     rails
-      .get(`instrumentals/${search}`)
+      .get(`instrumentals/${search}`, { headers: authHeader() })
       .then(response => setInstrumental(response.data.data[0]))
       .catch(error => setError(error));
 
