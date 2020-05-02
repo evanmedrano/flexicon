@@ -1,0 +1,8 @@
+.flash {
+  @include padding($su-4, null, $su-4, null);
+  background-color: $orange-100;
+  color: $orange-500;
+  font-size: $fs-6;
+  font-weight: 700;
+  text-align: center;
+}

@@ -15,7 +15,9 @@ import {
   DropdownItem,
   NavbarText
 } from 'reactstrap';
+
 import AuthService from '../../services/AuthService';
+import FlashService from '../../services/FlashService';
 import { userSignedIn } from '../../utilities/user-session';
 
 function Header(props) {
@@ -41,6 +43,7 @@ function Header(props) {
   const handleLogout = () => {
     AuthService.logout()
       .then(() => {
+        FlashService.set('message', 'You have successfully logged out.');
         history.push('/login');
       })
   }

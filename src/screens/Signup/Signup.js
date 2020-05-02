@@ -6,6 +6,7 @@ import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 
 import AuthService from '../../services/AuthService';
+import FlashService from '../../services/FlashService';
 import { required, email, password } from '../../utilities/form-validation';
 
 function Signup() {
@@ -28,6 +29,7 @@ function Signup() {
 
       AuthService.register(email, password, password_confirmation)
         .then(() => {
+          FlashService.set('message', 'You have successfully signed up.');
           history.push('/login');
         })
     }

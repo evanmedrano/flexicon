@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 import './Home.scss';
+import { FlashMessage } from '../../components';
 
 function Home() {
+
   return (
-    <div>Home</div>
+    <div>
+      <FlashMessage />
+    </div>
   )
 }
 

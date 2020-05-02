@@ -5,7 +5,9 @@ import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 
+import { FlashMessage } from '../../components';
 import AuthService from '../../services/AuthService';
+import FlashService from '../../services/FlashService';
 import { required, email, password } from '../../utilities/form-validation';
 
 function Login(props) {
@@ -24,6 +26,7 @@ function Login(props) {
 
       AuthService.login(email, password)
         .then(() => {
+          FlashService.set('message', 'You have successfully logged in.');
           history.push('/');
         })
     }
@@ -35,6 +38,8 @@ function Login(props) {
 
   return (
     <Container>
+      <FlashMessage />
+
       <div className="form form--shadow">
         <h2 className="mb-5">Log in to Flexicon</h2>
 
