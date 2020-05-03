@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/index.scss';
 import Routes from '../routes';
-import { Header, Footer } from '../components';
+import { HeaderContainer, Footer } from '../components';
 
 function App() {
   const [isLight, setIsLight] = useState(true);
@@ -28,8 +28,8 @@ function App() {
       <div className="mb-auto">
         <Routes
           header={
-            <Header
-              currentPageColor={handlePageChange}
+            <HeaderContainer
+              handlePageChange={handlePageChange}
               isLight={isLight}
               pageColor={pageColor}
             />

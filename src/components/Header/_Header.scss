@@ -16,4 +16,8 @@
   &__dropdown {
     font-size: $fs-5;
   }
+
+  .nav-link.active {
+    border-bottom: 1px solid $pink-300;
+  }
 }

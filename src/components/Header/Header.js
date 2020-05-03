@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+
+import { NavLink } from 'react-router-dom';
 import {
   Container,
   Collapse,
@@ -8,120 +9,60 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
 } from 'reactstrap';
 
-import AuthService from '../../services/AuthService';
-import FlashService from '../../services/FlashService';
 import { userSignedIn } from '../../utilities/user-session';
+import { HeaderSignedInLinks } from './HeaderSignedInLinks';
+import { HeaderSignedOutLinks } from './HeaderSignedOutLinks';
 
-function Header(props) {
+function Header({ handlePageChange, handleLogout, pageColor, isLight }) {
   const [isOpen, setIsOpen] = useState(false);
-  const history = useHistory();
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const currentPageColor = props.pageColor === 'light' ? "🌒" : "☀";
+  const currentPageColor = pageColor === 'light' ? "🌒" : "☀";
 
-  const handlePageChange = () => {
-    props.currentPageColor(currentPageColor);
+  const changePageColor = () => {
+    handlePageChange(currentPageColor);
   };
 
-  const renderUserLinks = () => {
-    if (userSignedIn()) {
-      return signedInLink()
-    } else {
-      return signedOutLinks()
-    }
-  }
-
-  const handleLogout = () => {
-    AuthService.logout()
-      .then(() => {
-        FlashService.set('message', 'You have successfully logged out.');
-        history.push('/login');
-      })
-  }
-
-  const signedInLink = () => {
-    return (
-      <NavbarText tag={Link} onClick={handleLogout}>
-        log out
-      </NavbarText>
-    )
-  }
-
-  const signedOutLinks = () => {
-    return (
-      <>
-        <NavbarText tag={Link} to={"/login"}>
-          log in
-        </NavbarText>
-        <NavbarText tag={Link} to={"/signup"} className="ml-4">
-          sign up
-        </NavbarText>
-      </>
-    )
-  }
-
   return (
-    <>
-      <header className="header">
-        <Navbar
-          color={props.pageColor}
-          dark={!props.isLight}
-          light={props.isLight}
-          expand="md"
-        >
-          <Container>
-            <NavbarBrand tag={Link} to={"/"} className="header__brand">
-              flexicon
-            </NavbarBrand>
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-              <Nav className="mr-auto" navbar>
-                <NavItem>
-                  <NavLink
-                    onClick={handlePageChange}
-                    className="header__colors"
-                  >
-                    {currentPageColor}
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="mr-4" tag={Link} to={"/brain-dump"}>
-                    brain dump
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="mr-4" tag={Link} to={"/word-play"}>
-                    word play
-                  </NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    options
-                  </DropdownToggle>
-                  <DropdownMenu right className="header__dropdown">
-                    <DropdownItem>option 1</DropdownItem>
-                    <DropdownItem>option 2</DropdownItem>
-                    <DropdownItem>option 3</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>reset</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Nav>
-              {renderUserLinks()}
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    </>
+    <header className="header">
+      <Navbar color={pageColor} dark={!isLight} light={isLight} expand="md">
+        <Container>
+          <NavbarBrand tag={NavLink} to={"/"} className="header__brand">
+            flexicon
+          </NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav navbar className="mr-auto">
+              <NavItem>
+                <a onClick={changePageColor} className="header__colors">
+                  {currentPageColor}
+                </a>
+              </NavItem>
+              <NavItem>
+                <NavLink className="mr-4 nav-link" to={"/brain-dump"}>
+                  brain dump
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="mr-4 nav-link" to={"/word-play"}>
+                  word play
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <div className="navbar-nav">
+              {userSignedIn() ? (
+                <HeaderSignedInLinks handleLogout={handleLogout} />
+              ) : (
+                <HeaderSignedOutLinks />
+              )}
+            </div>
+          </Collapse>
+        </Container>
+      </Navbar>
+    </header>
   );
 }
 
