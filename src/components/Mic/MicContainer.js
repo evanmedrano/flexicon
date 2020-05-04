@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
+
 import MicRecorder from 'mic-recorder-to-mp3';
+
+import { MicDetail } from './MicDetail';
 
 const recorder = new MicRecorder({ bitRate: 128 })
 
-function Mic() {
+function MicContainer() {
   const [recording, setRecording] = useState(false)
   const [blobURL, setBlobURL] = useState('')
   const [blocked, setBlocked] = useState(false)
 
-
   useEffect(() => {
     navigator.getUserMedia({ audio: true },
       () => {
-        console.log('permission granted')
         setBlocked(false)
       },
       () => {
-        console.log('permission denied')
         setBlocked(true)
       },
     )
@@ -52,17 +52,13 @@ function Mic() {
   }
 
   return (
-    <div>
-      <button onClick={startRecording} disabled={recording}>
-        Record
-      </button>
-      <button onClick={stopRecording} disabled={!recording}>
-        Stop
-      </button>
-
-      <audio src={blobURL} controls="controls" />
-    </div>
+    <MicDetail
+      blobURL={blobURL}
+      recording={recording}
+      startRecording={startRecording}
+      stopRecording={stopRecording}
+    />
   )
 }
 
-export { Mic };
+export { MicContainer };

@@ -1,1 +1,1 @@
-export { Mic } from './Mic';
+export { MicContainer } from './MicContainer';

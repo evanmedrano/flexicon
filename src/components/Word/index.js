@@ -1,1 +1,1 @@
-export { Word } from './Word';
+export { WordContainer } from './WordContainer';
