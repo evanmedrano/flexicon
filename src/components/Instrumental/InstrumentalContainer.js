@@ -13,6 +13,7 @@ function InstrumentalContainer() {
   const [instrumental, setInstrumental] = useState(null);
   const [instrumentals, setInstrumentals] = useState([]);
   const [nextInstrumental, setNextInstrumental] = useState(null);
+  const [playing, setPlaying] = useState(false);
   const [searchError, setSearchError] = useState(null);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ function InstrumentalContainer() {
 
   const handleInstrumentalSelect = instrumental => {
     setInstrumental(instrumental);
+    setPlaying(true);
     handleNextInstrumental(instrumentals.indexOf(instrumental))
   };
 
@@ -49,10 +51,14 @@ function InstrumentalContainer() {
     setNextInstrumental(instrumentals[index + 1])
   }
 
-  const handleAudioEnding = (currentInstrumental) => {
+  const handleInstrumentalEnding = (currentInstrumental) => {
     const currentInstrumentalIndex = instrumentals.indexOf(currentInstrumental);
     setInstrumental(instrumentals[currentInstrumentalIndex + 1])
     setNextInstrumental(instrumentals[currentInstrumentalIndex + 2])
+  }
+
+  const handleInstrumentalPause = () => {
+    setPlaying(false);
   }
 
   return (
@@ -64,12 +70,14 @@ function InstrumentalContainer() {
       <InstrumentalDetail
         instrumental={instrumental}
         nextInstrumental={nextInstrumental}
-        handleAudioEnding={handleAudioEnding}
+        handleInstrumentalEnding={handleInstrumentalEnding}
+        playing={playing}
       />
       <InstrumentalList
         error={error}
         instrumentals={instrumentals}
         handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPause={handleInstrumentalPause}
       />
     </div>
   )

@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useRef } from "react";
 
-function InstrumentalDetail({
-  instrumental,
-  nextInstrumental,
-  handleAudioEnding
-}) {
+function InstrumentalDetail(props) {
+  const {
+    instrumental,
+    nextInstrumental,
+    handleInstrumentalEnding,
+    playing
+  } = props;
+
+  const instrumentalAudio = useRef(null);
+
   if (!instrumental) {
     return <div>Waiting for your instrumental</div>;
   }
 
-  const audio = document.querySelector("#instrumental-audio");
+  if (playing === false) {
+    instrumentalAudio.current.pause();
+  }
+
+  if (instrumentalAudio.current !== null && playing === true) {
+    instrumentalAudio.current.play();
+  }
 
   const setNextInstrumental = () => {
-    handleAudioEnding(instrumental);
+    handleInstrumentalEnding(instrumental);
   };
 
   return (
@@ -28,6 +39,7 @@ function InstrumentalDetail({
         id="instrumental-audio"
         onEnded={setNextInstrumental}
         key={instrumental.id}
+        ref={instrumentalAudio}
       >
         <source
           src={instrumental.track || instrumental.preview}

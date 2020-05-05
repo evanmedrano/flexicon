@@ -1,5 +1,4 @@
 .instrumental-item {
-
   &__row {
     font-size: $fs-3;
 
@@ -13,30 +12,85 @@
     }
   }
 
+  &__row td {
+    cursor: default;
+  }
+
+  &__row:hover &__play-icon,
   &__row:hover &__ellipsis {
     visibility: visible;
   }
 
-  &__heart:hover,
-  &__title:hover {
-    cursor: pointer;
+  &__active &__play-icon {
+    display: none;
   }
 
-  &__date-added:hover {
-    cursor: default;
+  &__active &__speaker-icon {
+    display: inline-table;
+  }
+
+  &__active:hover &__pause-icon {
+    display: inline-table;
+  }
+
+  &__active:hover &__speaker-icon {
+    display: none;
+  }
+
+  &__paused &__pause-icon,
+  &__paused &__speaker-icon {
+    display: none !important;
+  }
+
+  &__paused &__play-icon {
+    display: inline-table;
+    visibility: hidden;
+  }
+
+  &__paused:hover &__play-icon {
+    visibility: visible;
+  }
+
+  &__active &__title,
+  &__active &__date-added {
+    color: $primary-300;
+
+    &:hover {
+      color: $primary-300;
+    }
+  }
+
+  &__icon {
+    color: $neutral-300;
+    font-size: $fs-7;
+    transition: transform .2s;
+    vertical-align: text-top;
+
+    &:hover {
+      color: $neutral-200;
+      transform: scale(1.1);
+    }
+  }
+
+  &__play-icon {
+    visibility: hidden;
+  }
+
+  &__pause-icon,
+  &__speaker-icon {
+    display: none;
+  }
+
+  &__speaker-icon {
+    font-size: $fs-4;
   }
 
   &__heart {
-    @include padding($su-3, null, $su-3, null);
-    text-align: center;
+    @include padding($su-2, null, $su-2, null);
   }
 
   &__ellipsis {
     color: $neutral-300;
     visibility: hidden;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 }

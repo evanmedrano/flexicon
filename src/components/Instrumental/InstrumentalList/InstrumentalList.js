@@ -6,7 +6,14 @@ import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { InstrumentalItem } from "../";
 
-function InstrumentalList({ error, instrumentals, handleInstrumentalSelect }) {
+function InstrumentalList(props) {
+  const {
+    error,
+    instrumentals,
+    handleInstrumentalPause,
+    handleInstrumentalSelect
+  } = props;
+
   const [filter, setFilter] = useState("");
 
   if (error) {
@@ -48,6 +55,7 @@ function InstrumentalList({ error, instrumentals, handleInstrumentalSelect }) {
         key={instrumental.id}
         instrumental={instrumental}
         handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPause={handleInstrumentalPause}
       />
     )
   })
@@ -58,6 +66,7 @@ function InstrumentalList({ error, instrumentals, handleInstrumentalSelect }) {
         key={instrumental.id}
         instrumental={instrumental}
         handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPause={handleInstrumentalPause}
       />
     );
   });
@@ -86,15 +95,18 @@ function InstrumentalList({ error, instrumentals, handleInstrumentalSelect }) {
       <table className="instrumental-list__table">
         <thead>
           <tr className="instrumental-list__table-headers">
+            <th className="instrumental-list__play-header">
+              <span className="invisible">Play</span>
+            </th>
             <th className="instrumental-list__like-header">
               <span className="invisible">Like</span>
             </th>
-            <th className="pl-4 instrumental-list__title-header">
+            <th className="pl-3 instrumental-list__title-header">
               <span>
                 Title
               </span>
             </th>
-            <th className="pl-4 instrumental-list__calendar">
+            <th className="pl-3 instrumental-list__calendar">
               <FontAwesomeIcon icon={faCalendarAlt} />
             </th>
             <th>
