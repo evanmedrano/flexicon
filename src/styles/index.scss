@@ -10,11 +10,11 @@
 @import 'components/custom-alert';
 @import 'components/form';
 
-@import '../components/Flash/FlashMessage.scss';
-@import '../components/Footer/Footer.scss';
-@import '../components/Header/Header.scss';
-@import '../components/Instrumental/Instrumental.scss';
-@import '../components/Word/Word.scss';
+@import '../components/Flash/FlashMessage';
+@import '../components/Footer/Footer';
+@import '../components/Header/Header';
+@import '../components/Instrumental/Instrumental';
+@import '../components/Word/Word';
 
-@import '../screens/BrainDump/BrainDump.scss';
-@import '../screens/WordPlay/WordPlay.scss';
+@import '../screens/BrainDump/BrainDump';
+@import '../screens/WordPlay/WordPlay';

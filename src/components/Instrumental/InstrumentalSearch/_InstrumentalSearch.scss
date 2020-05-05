@@ -1,0 +1,32 @@
+.instrumental-search {
+  color: $neutral-400;
+  font-size: $fs-4;
+  margin-bottom: $su-6;
+
+  &__error {
+    color: $red-300;
+    font-weight: 700;
+  }
+
+  &__input {
+    @include padding($su-2, null, $su-2, $su-6);
+    border: 1px solid $neutral-200;
+    border-radius: 2rem;
+    color: inherit;
+    max-width: 18rem;
+    transition: all .2s;
+    width: 100%;
+
+    &:focus {
+      border: 1px solid $neutral-300;
+      max-width: 100%;
+      outline: none;
+    }
+  }
+
+  &__icon {
+    bottom: 1.3rem;
+    left: 1rem;
+    position: absolute;
+  }
+}

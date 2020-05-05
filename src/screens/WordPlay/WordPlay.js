@@ -12,9 +12,10 @@ function WordPlay() {
       <Container>
         <Row>
           <Col xs="6">
-            <WordContainer />
+            {/*<WordContainer />
             <br/><br/>
             <MicContainer />
+            */}
           </Col>
           <Col xs="6">
             <InstrumentalContainer />

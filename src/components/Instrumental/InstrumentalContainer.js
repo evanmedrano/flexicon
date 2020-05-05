@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 import rails from '../../apis/rails';
-import { InstrumentalDetail } from './InstrumentalDetail';
-import { InstrumentalList } from './InstrumentalList';
-import { InstrumentalSearch } from './InstrumentalSearch';
+import {
+  InstrumentalDetail,
+  InstrumentalItem,
+  InstrumentalList,
+  InstrumentalSearch
+} from './';
 
 function InstrumentalContainer() {
   const [error, setError] = useState(null);
   const [instrumental, setInstrumental] = useState(null);
   const [instrumentals, setInstrumentals] = useState([]);
   const [nextInstrumental, setNextInstrumental] = useState(null);
+  const [searchError, setSearchError] = useState(null);
 
   useEffect(() => {
     handleInstrumentalsRequest();
@@ -25,8 +29,13 @@ function InstrumentalContainer() {
   const handleFormSubmit = search => {
     rails
       .get(`instrumentals/${search}`)
-      .then(response => setInstrumental(response.data.data[0]))
-      .catch(error => setError(error));
+      .then(response => {
+        if (response.data.data) {
+          setInstrumental(response.data.data[0])
+        } else {
+          setSearchError(response.data.error)
+        }
+      })
 
     setNextInstrumental(instrumentals[0]);
   };
@@ -48,7 +57,10 @@ function InstrumentalContainer() {
 
   return (
     <div>
-      <InstrumentalSearch handleFormSubmit={handleFormSubmit} />
+      <InstrumentalSearch
+        searchError={searchError}
+        handleFormSubmit={handleFormSubmit}
+      />
       <InstrumentalDetail
         instrumental={instrumental}
         nextInstrumental={nextInstrumental}

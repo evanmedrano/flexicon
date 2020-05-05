@@ -1,0 +1,42 @@
+.instrumental-item {
+
+  &__row {
+    font-size: $fs-3;
+
+    &:hover {
+      background-color: $neutral-100;
+      color: $neutral-500;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $neutral-200;
+    }
+  }
+
+  &__row:hover &__ellipsis {
+    visibility: visible;
+  }
+
+  &__heart:hover,
+  &__title:hover {
+    cursor: pointer;
+  }
+
+  &__date-added:hover {
+    cursor: default;
+  }
+
+  &__heart {
+    @include padding($su-3, null, $su-3, null);
+    text-align: center;
+  }
+
+  &__ellipsis {
+    color: $neutral-300;
+    visibility: hidden;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,110 @@
+.instrumental-list {
+
+  &__error {
+    color: $red-300;
+    font-weight: 700;
+  }
+
+  &__no-filter {
+    @include padding($su-1, null, null, $su-2);
+    font-size: $fs-3;
+  }
+
+  &__reset {
+    font-weight: 700;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  &__table {
+    width: 100%;
+  }
+
+  &__table-headers {
+    border-bottom: 1px solid $neutral-200;
+    font-size: $fs-3;
+    font-weight: 300;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    vertical-align: baseline;
+  }
+
+  &__like-header {
+    width: 4.2rem;
+  }
+
+  &__title-header {
+    width: 30.5rem;
+  }
+
+  &__calendar {
+    @include padding($su-1, null, $su-1, null);
+    font-size: $fs-5;
+  }
+
+  &__filter-container {
+    position: relative;
+
+    &:hover {
+      color: $neutral-300;
+    }
+  }
+
+  &__filter-container:hover &__filter:focus + &__search-icon {
+    color: $neutral-300;
+  }
+
+  &__filter {
+    @include padding($su-2, null, $su-2, $su-6);
+    background-color: transparent;
+    border: none;
+    color: currentColor;
+    font-size: $fs-3;
+    width: 100%;
+
+    &:focus {
+      background-color: $neutral-500;
+      color: $neutral-200;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: currentColor;
+    }
+
+    &:focus::placeholder {
+      color: $neutral-200;
+    }
+
+    &:hover::placeholder {
+      color: $neutral-300;
+    }
+  }
+
+  &__filter:focus ~ svg {
+    color: $neutral-200;
+    display: block;
+  }
+
+  &__search-icon {
+    bottom: 1.2rem;
+    font-size: $fs-3;
+    left: .7rem;
+    position: absolute;
+  }
+
+  &__close-icon {
+    bottom: 1rem;
+    color: transparent;
+    font-size: $fs-4;
+    position: absolute;
+    right: 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
