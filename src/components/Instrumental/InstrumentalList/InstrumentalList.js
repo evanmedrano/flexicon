@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { InstrumentalItem } from "../";
 
 function InstrumentalList(props) {
   const {
+    activeInstrumental,
     error,
-    instrumentals,
+    filter,
+    handleFilterReset,
     handleInstrumentalPause,
-    handleInstrumentalSelect
+    handleInstrumentalSelect,
+    handleQueueAdd,
+    instrumentals
   } = props;
-
-  const [filter, setFilter] = useState("");
 
   if (error) {
     return (
@@ -24,22 +25,21 @@ function InstrumentalList(props) {
     );
   }
 
-  const resetFilter = () => {
-    setFilter('');
-  }
-
   const filteredInstrumentals = instrumentals.filter(instrumental => {
     return instrumental.title.toLowerCase().includes(filter.toLowerCase());
   });
 
   const noFilteredInstrumentals = () => {
-    if (filteredInstrumentals.length === 0) {
+    if (filter && filteredInstrumentals.length === 0) {
       return (
         <>
           <tr>
             <td colSpan="4" className="instrumental-list__no-filter">
               <span className="mr-2">No results for "{filter}".</span>
-              <span onClick={resetFilter} className="instrumental-list__reset">
+              <span
+                onClick={() => handleFilterReset()}
+                className="instrumental-list__reset"
+              >
                 Remove Filter.
               </span>
             </td>
@@ -50,48 +50,37 @@ function InstrumentalList(props) {
   }
 
   const filteredInstrumentalList = filteredInstrumentals.map(instrumental => {
+    const activeStyle = 'instrumental-item__active'
+
     return (
       <InstrumentalItem
         key={instrumental.id}
-        instrumental={instrumental}
-        handleInstrumentalSelect={handleInstrumentalSelect}
         handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleQueueAdd={handleQueueAdd}
+        instrumental={instrumental}
+        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
       />
     )
   })
 
   const instrumentalsList = instrumentals.map(instrumental => {
+    const activeStyle = 'instrumental-item__active'
+
     return (
       <InstrumentalItem
         key={instrumental.id}
-        instrumental={instrumental}
-        handleInstrumentalSelect={handleInstrumentalSelect}
         handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleQueueAdd={handleQueueAdd}
+        instrumental={instrumental}
+        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
       />
     );
   });
 
   return (
-    <div>
-      <div className="mt-5 mb-2 instrumental-list__filter-container">
-        <input
-          type="text"
-          onChange={event => setFilter(event.target.value)}
-          placeholder="Filter"
-          value={filter}
-          className="instrumental-list__filter"
-        />
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="instrumental-list__search-icon"
-        />
-        <FontAwesomeIcon
-          icon={faTimes}
-          onClick={resetFilter}
-          className="instrumental-list__close-icon"
-        />
-      </div>
-
+    <div className="instrumental-list">
       <table className="instrumental-list__table">
         <thead>
           <tr className="instrumental-list__table-headers">
@@ -114,8 +103,8 @@ function InstrumentalList(props) {
             </th>
           </tr>
         </thead>
-        <tbody>
-          {filter === '' ? instrumentalsList : filteredInstrumentalList}
+        <tbody className="instrumental-list__tbody">
+          {filter ? filteredInstrumentalList : instrumentalsList}
           {noFilteredInstrumentals()}
         </tbody>
       </table>

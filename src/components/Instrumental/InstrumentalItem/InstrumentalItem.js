@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,18 +17,12 @@ import { truncate } from '../../../utilities';
 
 function InstrumentalItem(props) {
   const {
-    instrumental,
+    activeClass,
+    handleInstrumentalPause,
     handleInstrumentalSelect,
-    handleInstrumentalPause
+    handleQueueAdd,
+    instrumental
   } = props;
-
-  const onInstrumentalSelect = event => {
-    handleInstrumentalSelect(instrumental);
-    removePreviousActiveClasses(event.target);
-
-    const currentActiveInstrumental = event.target.closest("tr");
-    currentActiveInstrumental.classList.add("instrumental-item__active");
-  }
 
   const onInstrumentalPause = event => {
     handleInstrumentalPause(instrumental);
@@ -37,28 +31,16 @@ function InstrumentalItem(props) {
     currentActiveInstrumental.classList.add("instrumental-item__paused");
   }
 
-  const removePreviousActiveClasses = (instrumental) => {
-    const tbody = instrumental.closest('tbody');
-    const previousActiveInstrumental = tbody.querySelector(
-      '.instrumental-item__active'
-    );
-
-    if (previousActiveInstrumental !== null) {
-      previousActiveInstrumental.classList.remove("instrumental-item__active");
-      previousActiveInstrumental.classList.remove("instrumental-item__paused");
-    }
-  }
-
   return (
     <>
       <tr
-        onDoubleClick={onInstrumentalSelect}
-        className="instrumental-item__row"
+        onDoubleClick={() => handleInstrumentalSelect(instrumental)}
+        className={activeClass + " instrumental-item__row"}
       >
         <td className="text-center">
           <FontAwesomeIcon
             icon={faPlayCircle}
-            onClick={onInstrumentalSelect}
+            onClick={() => handleInstrumentalSelect(instrumental)}
             className="instrumental-item__icon instrumental-item__play-icon"
           />
           <FontAwesomeIcon
@@ -87,6 +69,7 @@ function InstrumentalItem(props) {
         <td className="pl-5 pr-3 text-center">
           <FontAwesomeIcon
             icon={faEllipsisH}
+            onClick={event => handleQueueAdd(instrumental)}
             title="More"
             className="instrumental-item__ellipsis"
           />

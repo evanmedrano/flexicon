@@ -1,0 +1,16 @@
+.instrumental-queue {
+
+  .button {
+    @include padding(null, $su-6, null, $su-6);
+    font-size: $fs-2;
+    letter-spacing: .2rem;
+    text-transform: uppercase;
+    transition: all .2s;
+
+    &:hover {
+      background-color: transparent;
+      color: currentColor;
+      transform: scale(1.1);
+    }
+  }
+}

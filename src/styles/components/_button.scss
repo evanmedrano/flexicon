@@ -59,7 +59,7 @@
   &--outline {
     background-color: transparent;
     border: 1px solid $neutral-200;
-    color: $neutral-500;
+    color: currentColor;
 
     &:hover {
       background-color: $neutral-200;
