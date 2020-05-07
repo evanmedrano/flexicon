@@ -7,10 +7,11 @@ function InstrumentalQueue(props) {
     activeInstrumental,
     filter,
     handleInstrumentalPause,
-    handleInstrumentalSelect,
+    handleInstrumentalPlay,
     handleQueueAdd,
     handleQueueRemove,
     handleQueueReset,
+    playing,
     queue,
     queueInstrumentals
   } = props;
@@ -35,10 +36,11 @@ function InstrumentalQueue(props) {
         activeInstrumental={activeInstrumental}
         filter=''
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPlay={handleInstrumentalPlay}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumentals={queue}
+        playing={playing}
         queueInstrumentals={queueInstrumentals}
       />
     </div>

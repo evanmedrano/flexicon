@@ -19,11 +19,13 @@ import { truncate } from "../../../utilities";
 function InstrumentalItem(props) {
   const {
     activeClass,
+    activeInstrumental,
     handleInstrumentalPause,
-    handleInstrumentalSelect,
+    handleInstrumentalPlay,
     handleQueueAdd,
     handleQueueRemove,
     instrumental,
+    playing,
     queueText
   } = props;
 
@@ -85,7 +87,7 @@ function InstrumentalItem(props) {
   };
 
   const onInstrumentalPlay = () => {
-    handleInstrumentalSelect(instrumental);
+    handleInstrumentalPlay(instrumental);
 
     rowNode.current.classList.remove("instrumental-item__paused");
     rowNode.current.classList.add("instrumental-item__active");
@@ -107,11 +109,36 @@ function InstrumentalItem(props) {
     <>
       <tr
         onClick={addSelectedClass}
-        onDoubleClick={() => handleInstrumentalSelect(instrumental)}
+        onDoubleClick={() => handleInstrumentalPlay(instrumental)}
         ref={rowNode}
         className={activeClass + " instrumental-item__row"}
       >
         <td className="text-center">
+          {playing && activeInstrumental ? (
+            <>
+              <FontAwesomeIcon
+                icon={faPauseCircle}
+                onClick={onInstrumentalPause}
+                className="instrumental-item__icon instrumental-item__pause-icon"
+              />
+              <FontAwesomeIcon
+                icon={faVolumeUp}
+                className="instrumental-item__icon instrumental-item__speaker-icon"
+              />
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon
+                icon={faPlayCircle}
+                onClick={onInstrumentalPlay}
+                className="instrumental-item__icon instrumental-item__active-play-icon"
+              />
+              <FontAwesomeIcon
+                icon={faMusic}
+                className="instrumental-item__icon instrumental-item__active-note-icon"
+              />
+            </>
+          )}
           <FontAwesomeIcon
             icon={faMusic}
             className="instrumental-item__icon instrumental-item__note-icon"
@@ -120,15 +147,6 @@ function InstrumentalItem(props) {
             icon={faPlayCircle}
             onClick={onInstrumentalPlay}
             className="instrumental-item__icon instrumental-item__play-icon"
-          />
-          <FontAwesomeIcon
-            icon={faVolumeUp}
-            className="instrumental-item__icon instrumental-item__speaker-icon"
-          />
-          <FontAwesomeIcon
-            icon={faPauseCircle}
-            onClick={onInstrumentalPause}
-            className="instrumental-item__icon instrumental-item__pause-icon"
           />
         </td>
         <td className="instrumental-item__heart pl-3">

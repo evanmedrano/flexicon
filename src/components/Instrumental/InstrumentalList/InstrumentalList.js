@@ -12,12 +12,13 @@ function InstrumentalList(props) {
     filter,
     handleFilterReset,
     handleInstrumentalPause,
-    handleInstrumentalSelect,
+    handleInstrumentalPlay,
     handleQueueAdd,
     handleQueueRemove,
     heading,
     instrumental,
     instrumentals,
+    playing,
     queueInstrumentals
   } = props;
 
@@ -33,11 +34,13 @@ function InstrumentalList(props) {
     return (
       <InstrumentalItem
         activeClass='instrumental-item__active'
+        activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPlay={handleInstrumentalPlay}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
+        playing={playing}
         queueText={
           queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
         }
@@ -76,11 +79,13 @@ function InstrumentalList(props) {
       <InstrumentalItem
         key={instrumental.id}
         activeClass={instrumental === activeInstrumental ? activeStyle : ''}
+        activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPlay={handleInstrumentalPlay}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
+        playing={playing}
         queueText={
           queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
         }
@@ -95,11 +100,13 @@ function InstrumentalList(props) {
       <InstrumentalItem
         key={instrumental.id}
         activeClass={instrumental === activeInstrumental ? activeStyle : ''}
+        activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPlay={handleInstrumentalPlay}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
+        playing={playing}
         queueText={
           queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
         }

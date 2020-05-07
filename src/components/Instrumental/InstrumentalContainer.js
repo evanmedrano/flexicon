@@ -49,7 +49,7 @@ function InstrumentalContainer() {
     setNextInstrumental(instrumentals[0]);
   };
 
-  const handleInstrumentalSelect = instrumental => {
+  const handleInstrumentalPlay = instrumental => {
     setInstrumental(instrumental);
     setActiveInstrumental(instrumental);
     const removedInstrumentals = instrumentals.splice(0, instrumentals.indexOf(instrumental) + 1)
@@ -141,7 +141,7 @@ function InstrumentalContainer() {
               instrumental={instrumental}
               handleInstrumentalEnding={handleInstrumentalEnding}
               handleInstrumentalPause={handleInstrumentalPause}
-              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleInstrumentalPlay={handleInstrumentalPlay}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               playing={playing}
@@ -150,11 +150,12 @@ function InstrumentalContainer() {
             <InstrumentalQueue
               activeInstrumental={activeInstrumental}
               handleInstrumentalPause={handleInstrumentalPause}
-              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleInstrumentalPlay={handleInstrumentalPlay}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               handleQueueReset={handleQueueReset}
               filter={filter}
+              playing={playing}
               queue={queue}
               queueInstrumentals={queueInstrumentals}
             />
@@ -169,11 +170,12 @@ function InstrumentalContainer() {
               filter={filter}
               handleFilterReset={handleFilterReset}
               handleInstrumentalPause={handleInstrumentalPause}
-              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleInstrumentalPlay={handleInstrumentalPlay}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               heading="Up Next"
               instrumentals={instrumentals}
+              playing={playing}
               queueInstrumentals={queueInstrumentals}
             />
           </Col>
@@ -182,7 +184,7 @@ function InstrumentalContainer() {
       <InstrumentalPlayer
         handleInstrumentalEnding={handleInstrumentalEnding}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleInstrumentalPlay={handleInstrumentalPlay}
         instrumental={instrumental}
         playing={playing}
       />

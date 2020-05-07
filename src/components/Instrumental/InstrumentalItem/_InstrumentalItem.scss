@@ -31,7 +31,8 @@
     display: none;
   }
 
-  &__active &__speaker-icon {
+  &__active &__speaker-icon,
+  &__active &__active-note-icon {
     display: inline-table;
   }
 
@@ -39,7 +40,12 @@
     display: inline-table;
   }
 
-  &__active:hover &__play-icon {
+  &__active:hover &__active-play-icon {
+    display: inline-table;
+  }
+
+  &__active:hover &__play-icon,
+  &__active:hover &__active-note-icon {
     display: none;
   }
 
@@ -62,6 +68,7 @@
 
   &__active &__title,
   &__active &__date-added,
+  &__active &__active-note-icon,
   &__paused &__title,
   &__paused &__date-added,
   &__paused &__note-icon {
@@ -84,7 +91,9 @@
     }
   }
 
-  &__play-icon {
+  &__play-icon,
+  &__active-play-icon,
+  &__active-note-icon {
     display: none;
   }
 
@@ -94,7 +103,8 @@
   }
 
   &__speaker-icon,
-  &__note-icon {
+  &__note-icon,
+  &__active-note-icon {
     font-size: $fs-4;
   }
 
