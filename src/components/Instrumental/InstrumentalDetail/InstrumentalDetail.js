@@ -1,51 +1,38 @@
-import React, { useRef } from "react";
+import React from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
+
+import { InstrumentalList } from "../";
 
 function InstrumentalDetail(props) {
   const {
+    activeInstrumental,
+    handleInstrumentalPause,
+    handleInstrumentalSelect,
+    handleQueueAdd,
+    handleQueueRemove,
     instrumental,
-    nextInstrumental,
-    handleInstrumentalEnding,
-    playing
+    queueInstrumentals
   } = props;
-
-  const instrumentalAudio = useRef(null);
-
-  if (!instrumental) {
-    return <div>Waiting for your instrumental</div>;
-  }
-
-  if (playing === false) {
-    instrumentalAudio.current.pause();
-  }
-
-  if (instrumentalAudio.current !== null && playing === true) {
-    instrumentalAudio.current.play();
-  }
-
-  const setNextInstrumental = () => {
-    handleInstrumentalEnding(instrumental);
-  };
 
   return (
     <div>
-      <h2>Now playing: {instrumental.title}</h2>
-      <h2>
-        {nextInstrumental === undefined ? " " : `Next up: ${nextInstrumental.title}`}
-      </h2>
-
-      <audio
-        controls
-        autoPlay
-        id="instrumental-audio"
-        onEnded={setNextInstrumental}
-        key={instrumental.id}
-        ref={instrumentalAudio}
-      >
-        <source
-          src={instrumental.track || instrumental.preview}
-          type="audio/mpeg"
-        />
-      </audio>
+      <InstrumentalList
+        activeClass="instrumental-item__active"
+        filter=''
+        handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
+        heading="Now Playing"
+        instrumental={instrumental}
+        instrumentals={[]}
+        queueInstrumentals={queueInstrumentals}
+      />
+      <h4 className="mt-3 ml-4">
+        {!instrumental ? "Please select an instrumental to get started." : ""}
+      </h4>
     </div>
   );
 }

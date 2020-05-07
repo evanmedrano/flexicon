@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import { Container, Row, Col } from 'reactstrap';
+
 import { WordDetail } from './WordDetail';
 import rails from '../../apis/rails';
 
@@ -29,12 +31,18 @@ function WordContainer() {
   const stopWordLoop = () => clearInterval(intervalId.current);
 
   return (
-    <WordDetail
-      error={error}
-      word={word}
-      startWordLoop={startWordLoop}
-      stopWordLoop={stopWordLoop}
-    />
+    <Container>
+      <Row>
+        <Col xs="6">
+          <WordDetail
+            error={error}
+            word={word}
+            startWordLoop={startWordLoop}
+            stopWordLoop={stopWordLoop}
+          />
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

@@ -9,8 +9,10 @@ function InstrumentalQueue(props) {
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
+    handleQueueRemove,
     handleQueueReset,
-    queue
+    queue,
+    queueInstrumentals
   } = props;
 
   if (queue.length === 0) {
@@ -21,6 +23,7 @@ function InstrumentalQueue(props) {
     <div className="instrumental-queue">
       <div className="d-flex justify-content-between align-items-baseline">
         <h2>Next In Queue</h2>
+        <hr className="border-bottom mb-4" />
         <button
           onClick={() => handleQueueReset()}
           className="button button--outline button--round"
@@ -30,11 +33,13 @@ function InstrumentalQueue(props) {
       </div>
       <InstrumentalList
         activeInstrumental={activeInstrumental}
-        filter={filter}
+        filter=''
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
         instrumentals={queue}
+        queueInstrumentals={queueInstrumentals}
       />
     </div>
   )

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
 import {
   InstrumentalContainer,
   MicContainer,
@@ -9,19 +8,13 @@ import {
 function WordPlay() {
   return (
     <div className="word-play">
-      <Container>
-        <Row>
-          <Col xs="6">
+      <div className="container-fluid p-0">
             {/*<WordContainer />
             <br/><br/>
             <MicContainer />
             */}
-          </Col>
-          <Col xs="6">
-            <InstrumentalContainer />
-          </Col>
-        </Row>
-      </Container>
+        <InstrumentalContainer />
+      </div>
     </div>
   );
 }

@@ -14,7 +14,11 @@ function InstrumentalList(props) {
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
-    instrumentals
+    handleQueueRemove,
+    heading,
+    instrumental,
+    instrumentals,
+    queueInstrumentals
   } = props;
 
   if (error) {
@@ -23,6 +27,22 @@ function InstrumentalList(props) {
         There was an error loading the instrumentals
       </h2>
     );
+  }
+
+  const nowPlaying = () => {
+    return (
+      <InstrumentalItem
+        activeClass='instrumental-item__active'
+        handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
+        instrumental={instrumental}
+        queueText={
+          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
+        }
+      />
+    )
   }
 
   const filteredInstrumentals = instrumentals.filter(instrumental => {
@@ -55,11 +75,15 @@ function InstrumentalList(props) {
     return (
       <InstrumentalItem
         key={instrumental.id}
+        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
-        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
+        queueText={
+          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
+        }
       />
     )
   })
@@ -70,17 +94,23 @@ function InstrumentalList(props) {
     return (
       <InstrumentalItem
         key={instrumental.id}
+        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
-        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
+        queueText={
+          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
+        }
       />
     );
   });
 
   return (
     <div className="instrumental-list">
+      <h2>{heading}</h2>
+      <hr className="border-bottom mb-4" />
       <table className="instrumental-list__table">
         <thead>
           <tr className="instrumental-list__table-headers">
@@ -104,6 +134,7 @@ function InstrumentalList(props) {
           </tr>
         </thead>
         <tbody className="instrumental-list__tbody">
+          {instrumental ? nowPlaying() : null}
           {filter ? filteredInstrumentalList : instrumentalsList}
           {noFilteredInstrumentals()}
         </tbody>

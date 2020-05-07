@@ -1,27 +1,33 @@
 .instrumental-item {
   &__row {
+    border-bottom: 1px solid $neutral-200;
     font-size: $fs-3;
+  }
 
-    &:hover {
-      background-color: $neutral-100;
-      color: $neutral-500;
-    }
-
-    &:not(:last-child) {
-      border-bottom: 1px solid $neutral-200;
-    }
+  &__row:hover,
+  &__selected {
+    background-color: $neutral-100;
+    color: $neutral-500;
   }
 
   &__row td {
     cursor: default;
   }
 
-  &__row:hover &__play-icon,
   &__row:hover &__ellipsis {
     visibility: visible;
   }
 
-  &__active &__play-icon {
+  &__row:hover &__play-icon {
+    display: inline-table;
+  }
+
+  &__row:hover &__note-icon {
+    display: none;
+  }
+
+  &__active &__play-icon,
+  &__active &__note-icon {
     display: none;
   }
 
@@ -33,26 +39,32 @@
     display: inline-table;
   }
 
+  &__active:hover &__play-icon {
+    display: none;
+  }
+
   &__active:hover &__speaker-icon {
     display: none;
   }
 
   &__paused &__pause-icon,
   &__paused &__speaker-icon {
-    display: none !important;
+    display: none;
   }
 
   &__paused &__play-icon {
-    display: inline-table;
-    visibility: hidden;
+    display: none;
   }
 
   &__paused:hover &__play-icon {
-    visibility: visible;
+    display: inline-table;
   }
 
   &__active &__title,
-  &__active &__date-added {
+  &__active &__date-added,
+  &__paused &__title,
+  &__paused &__date-added,
+  &__paused &__note-icon {
     color: $primary-300;
 
     &:hover {
@@ -73,7 +85,7 @@
   }
 
   &__play-icon {
-    visibility: hidden;
+    display: none;
   }
 
   &__pause-icon,
@@ -81,7 +93,8 @@
     display: none;
   }
 
-  &__speaker-icon {
+  &__speaker-icon,
+  &__note-icon {
     font-size: $fs-4;
   }
 
@@ -93,4 +106,38 @@
     color: $neutral-300;
     visibility: hidden;
   }
+
+  &__dropdown {
+    @include padding($su-2, null, $su-2, null);
+    background-color: $neutral-500;
+    border-radius: .3rem;
+    color: $neutral-200;
+    font-size: $fs-3;
+    position: absolute;
+    right: 3.2rem;
+    top: 3.2rem;
+    z-index: 1;
+
+    hr {
+      border-color: currentColor;
+    }
+  }
+
+  &__dropdown-list {
+    list-style: none;
+    margin: 0;
+    width: max-content;
+  }
+
+  &__dropdown-item {
+    @include padding($su-2, $su-8, $su-2, $su-6);
+    text-align: left;
+    width: 100%;
+
+    &:hover {
+      background-color: $neutral-400;
+      color: $white;
+    }
+  }
+
 }

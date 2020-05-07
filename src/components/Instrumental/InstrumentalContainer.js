@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
+import { Container, Row, Col } from 'reactstrap';
+
 import rails from '../../apis/rails';
 import {
   InstrumentalDetail,
   InstrumentalFilter,
   InstrumentalList,
+  InstrumentalPlayer,
   InstrumentalSearch,
   InstrumentalQueue
 } from './';
@@ -19,6 +22,7 @@ function InstrumentalContainer() {
   const [playing, setPlaying] = useState(false);
   const [searchError, setSearchError] = useState(null);
   const [queue, setQueue] = useState([]);
+  const [queueInstrumentals, setQueueInstrumentals] = useState([]);
 
   useEffect(() => {
     handleInstrumentalsRequest();
@@ -48,6 +52,8 @@ function InstrumentalContainer() {
   const handleInstrumentalSelect = instrumental => {
     setInstrumental(instrumental);
     setActiveInstrumental(instrumental);
+    const removedInstrumentals = instrumentals.splice(0, instrumentals.indexOf(instrumental) + 1)
+    setInstrumentals(instrumentals.concat(removedInstrumentals))
 
     if (queue.includes(instrumental)) {
       if (queue.length === 1) {
@@ -75,34 +81,20 @@ function InstrumentalContainer() {
   const handleInstrumentalEnding = (currentInstrumental) => {
     let currentInstrumentalIndex;
     let instrumentalsList;
-    const nextInQueue = queue[0];
     if (queue.length !== 0) {
-      if (queue.length === 1 && nextInstrumental === instrumentals[0]) {
-        setInstrumental(instrumentals[0])
-        setActiveInstrumental(instrumentals[0])
-        setNextInstrumental(instrumentals[1])
-      } else if (queue.length === 1) {
-        setInstrumental(nextInQueue);
-        setActiveInstrumental(nextInQueue)
-        setNextInstrumental(instrumentals[0]);
-      } else {
-        setInstrumental(nextInQueue);
-        setActiveInstrumental(nextInQueue)
-        setNextInstrumental(queue[1])
-      }
+      setInstrumental(queue[0])
+      setActiveInstrumental(queue[0])
       setQueue(queue.filter(queueItem => {
-        return nextInQueue !== queueItem;
+        return queue[0] !== queueItem;
       }));
-    } else if (nextInstrumental === instrumentals[0]) {
-      setInstrumental(instrumentals[0])
-      setActiveInstrumental(instrumentals[0])
-      setNextInstrumental(instrumentals[1])
     } else {
-      currentInstrumentalIndex = instrumentals.indexOf(currentInstrumental);
       instrumentalsList = instrumentals
-      setInstrumental(instrumentalsList[currentInstrumentalIndex + 1])
-      setActiveInstrumental(instrumentalsList[currentInstrumentalIndex + 1])
-      setNextInstrumental(instrumentalsList[currentInstrumentalIndex + 2])
+      setInstrumental(instrumentalsList[0])
+      setActiveInstrumental(instrumentalsList[0])
+      setNextInstrumental(instrumentalsList[1])
+      const removedInstrumentals = instrumentals.splice(0, 1);
+      currentInstrumentalIndex = instrumentals.indexOf(currentInstrumental);
+      setInstrumentals(instrumentals.concat(removedInstrumentals));
     }
   }
 
@@ -120,50 +112,81 @@ function InstrumentalContainer() {
 
   const handleQueueAdd = instrumental => {
     setQueue([...queue, instrumental]);
+    setQueueInstrumentals([...queue, instrumental]);
     setNextInstrumental(queue[0] || instrumental);
   }
 
-  const handleQueueReset = () => {
+  const handleQueueRemove = instrumental => {
+    setQueue(queue.filter(queueItem => {
+      return queueItem !== instrumental;
+    }));
+  }
+
+  const handleQueueReset = instrumental => {
     setQueue([]);
+    setQueueInstrumentals([])
   }
 
   return (
-    <div>
-      <InstrumentalSearch
-        searchError={searchError}
-        handleFormSubmit={handleFormSubmit}
-      />
-      <InstrumentalDetail
-        instrumental={instrumental}
-        nextInstrumental={nextInstrumental}
+    <>
+      <Container>
+        <Row>
+          <Col xs={{ size: 6, offset: 6 }}>
+            <InstrumentalSearch
+              searchError={searchError}
+              handleFormSubmit={handleFormSubmit}
+            />
+            <InstrumentalDetail
+              activeInstrumental={activeInstrumental}
+              instrumental={instrumental}
+              handleInstrumentalEnding={handleInstrumentalEnding}
+              handleInstrumentalPause={handleInstrumentalPause}
+              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleQueueAdd={handleQueueAdd}
+              handleQueueRemove={handleQueueRemove}
+              playing={playing}
+              queueInstrumentals={queueInstrumentals}
+            />
+            <InstrumentalQueue
+              activeInstrumental={activeInstrumental}
+              handleInstrumentalPause={handleInstrumentalPause}
+              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleQueueAdd={handleQueueAdd}
+              handleQueueRemove={handleQueueRemove}
+              handleQueueReset={handleQueueReset}
+              filter={filter}
+              queue={queue}
+              queueInstrumentals={queueInstrumentals}
+            />
+            <InstrumentalFilter
+              filter={filter}
+              handleInstrumentalFilter={handleInstrumentalFilter}
+              handleFilterReset={handleFilterReset}
+            />
+            <InstrumentalList
+              activeInstrumental={activeInstrumental}
+              error={error}
+              filter={filter}
+              handleFilterReset={handleFilterReset}
+              handleInstrumentalPause={handleInstrumentalPause}
+              handleInstrumentalSelect={handleInstrumentalSelect}
+              handleQueueAdd={handleQueueAdd}
+              handleQueueRemove={handleQueueRemove}
+              heading="Up Next"
+              instrumentals={instrumentals}
+              queueInstrumentals={queueInstrumentals}
+            />
+          </Col>
+        </Row>
+      </Container>
+      <InstrumentalPlayer
         handleInstrumentalEnding={handleInstrumentalEnding}
+        handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        instrumental={instrumental}
         playing={playing}
       />
-      <InstrumentalQueue
-        activeInstrumental={activeInstrumental}
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        handleQueueReset={handleQueueReset}
-        filter={filter}
-        queue={queue}
-      />
-      <InstrumentalFilter
-        filter={filter}
-        handleInstrumentalFilter={handleInstrumentalFilter}
-        handleFilterReset={handleFilterReset}
-      />
-      <InstrumentalList
-        activeInstrumental={activeInstrumental}
-        error={error}
-        filter={filter}
-        handleFilterReset={handleFilterReset}
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        instrumentals={instrumentals}
-      />
-    </div>
+    </>
   )
 }
 
