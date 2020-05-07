@@ -7,7 +7,7 @@ function InstrumentalQueue(props) {
     activeInstrumental,
     filter,
     handleInstrumentalPause,
-    handleInstrumentalPlay,
+    handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     handleQueueReset,
@@ -36,7 +36,7 @@ function InstrumentalQueue(props) {
         activeInstrumental={activeInstrumental}
         filter=''
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumentals={queue}

@@ -21,7 +21,7 @@ function InstrumentalItem(props) {
     activeClass,
     activeInstrumental,
     handleInstrumentalPause,
-    handleInstrumentalPlay,
+    handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     instrumental,
@@ -87,7 +87,7 @@ function InstrumentalItem(props) {
   };
 
   const onInstrumentalPlay = () => {
-    handleInstrumentalPlay(instrumental);
+    handleInstrumentalSelect(instrumental);
 
     rowNode.current.classList.remove("instrumental-item__paused");
     rowNode.current.classList.add("instrumental-item__active");
@@ -109,7 +109,7 @@ function InstrumentalItem(props) {
     <>
       <tr
         onClick={addSelectedClass}
-        onDoubleClick={() => handleInstrumentalPlay(instrumental)}
+        onDoubleClick={() => handleInstrumentalSelect(instrumental)}
         ref={rowNode}
         className={activeClass + " instrumental-item__row"}
       >

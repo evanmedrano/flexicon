@@ -9,6 +9,9 @@ function InstrumentalPlayer(props) {
     handleInstrumentalEnding,
     handleInstrumentalPause,
     handleInstrumentalPlay,
+    handleInstrumentalSelect,
+    handleNextInstrumental,
+    handlePreviousInstrumental,
     instrumental,
     playing
   } = props;
@@ -34,15 +37,17 @@ function InstrumentalPlayer(props) {
         <FontAwesomeIcon icon={unlikedBeat} />
       </div>
       <div className="instrumental-player__controls">
+        <span onClick={handlePreviousInstrumental}>Previous</span>
         {playing ? (
-          <span onClick={() => handleInstrumentalPause(instrumental)}>
+          <span onClick={handleInstrumentalPause}>
             Pause
           </span>
         ) : (
-          <span onClick={() => handleInstrumentalPlay(instrumental)}>
+          <span onClick={handleInstrumentalPlay}>
             Play
           </span>
         )}
+        <span onClick={handleNextInstrumental}>Next</span>
       </div>
       <audio
         autoPlay
@@ -51,8 +56,8 @@ function InstrumentalPlayer(props) {
         onEnded={() => handleInstrumentalEnding(instrumental)}
         key={instrumental.id}
         ref={instrumentalAudio}
-        onPlay={() => handleInstrumentalPlay(instrumental)}
-        onPause={() => handleInstrumentalPause(instrumental)}
+        onPlay={handleInstrumentalPlay}
+        onPause={handleInstrumentalPause}
         className="instrumental-player__controls"
       >
         <source

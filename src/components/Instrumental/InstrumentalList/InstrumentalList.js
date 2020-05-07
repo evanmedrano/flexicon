@@ -12,7 +12,7 @@ function InstrumentalList(props) {
     filter,
     handleFilterReset,
     handleInstrumentalPause,
-    handleInstrumentalPlay,
+    handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     heading,
@@ -36,7 +36,7 @@ function InstrumentalList(props) {
         activeClass='instrumental-item__active'
         activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
@@ -81,7 +81,7 @@ function InstrumentalList(props) {
         activeClass={instrumental === activeInstrumental ? activeStyle : ''}
         activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
@@ -102,7 +102,7 @@ function InstrumentalList(props) {
         activeClass={instrumental === activeInstrumental ? activeStyle : ''}
         activeInstrumental={activeInstrumental}
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}

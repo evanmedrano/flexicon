@@ -9,7 +9,7 @@ function InstrumentalDetail(props) {
   const {
     activeInstrumental,
     handleInstrumentalPause,
-    handleInstrumentalPlay,
+    handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     instrumental,
@@ -24,7 +24,7 @@ function InstrumentalDetail(props) {
         activeInstrumental={activeInstrumental}
         filter=''
         handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         heading="Now Playing"
