@@ -14,7 +14,8 @@ function InstrumentalDetail(props) {
     handleQueueRemove,
     instrumental,
     playing,
-    queueInstrumentals
+    queueInstrumentals,
+    shuffledInstrumental
   } = props;
 
   return (
@@ -32,6 +33,7 @@ function InstrumentalDetail(props) {
         instrumentals={[]}
         playing={playing}
         queueInstrumentals={queueInstrumentals}
+        shuffledInstrumental={shuffledInstrumental}
       />
       <h4 className="mt-3 ml-4">
         {!instrumental ? "Please select an instrumental to get started." : ""}
