@@ -43,6 +43,7 @@ function InstrumentalContainer() {
       .then(response => {
         if (response.data.data) {
           setInstrumental(response.data.data[0])
+          setSearchError(null)
         } else {
           setSearchError(response.data.error)
         }
