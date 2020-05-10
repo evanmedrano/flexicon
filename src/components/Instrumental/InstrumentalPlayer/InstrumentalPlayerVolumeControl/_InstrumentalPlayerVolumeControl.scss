@@ -5,11 +5,7 @@
   text-align: center;
   width: 23%;
 
-  &:hover .instrumental-player__draggable-bar {
+  &:hover .instrumental-player-slider__state {
     background-color: $primary-300;
-  }
-
-  .instrumental-player__draggable-bar {
-    transition: width 0s;
   }
 }

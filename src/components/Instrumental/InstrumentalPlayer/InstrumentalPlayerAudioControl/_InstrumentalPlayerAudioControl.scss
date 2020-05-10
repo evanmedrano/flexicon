@@ -1,38 +1,11 @@
 .instrumental-player-audio-control {
-  &__buttons {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
+  @include padding(null, $su-6, null, $su-6);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 45%;
 
-  &__icon {
-    color: $neutral-300;
-    font-size: $fs-6;
-
-    &:hover {
-      color: $neutral-200;
-    }
-  }
-
-  &__icon--active {
-    color: $primary-300;
-    font-size: $fs-6;
-
-    &:hover {
-      color: $primary-200;
-    }
-  }
-
-  &__play-icon,
-  &__pause-icon {
-    color: $neutral-300;
-    @include margin(null, $su-5, $su-2, $su-5);
-    font-size: $fs-9;
-    transition: all .3s;
-
-    &:hover {
-      color: $neutral-200;
-      transform: scale(1.1);
-    }
+  &:hover {
+    cursor: default;
   }
 }

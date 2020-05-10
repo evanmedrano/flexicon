@@ -1,10 +1,25 @@
-@import 'InstrumentalPlayerSharedStyling';
-
 @import 'InstrumentalPlayerAudioControl/InstrumentalPlayerAudioControl';
 
+@import 'InstrumentalPlayerAudioButton/InstrumentalPlayerAudioButton';
+
 @import 'InstrumentalPlayerDetail/InstrumentalPlayerDetail';
+
+@import 'InstrumentalPlayerSlider/InstrumentalPlayerSlider';
 
 @import 'InstrumentalPlayerTimeControl/InstrumentalPlayerTimeControl';
 
 @import 'InstrumentalPlayerVolumeControl/InstrumentalPlayerVolumeControl';
 
+.instrumental-player-container {
+  @include padding($su-4, $su-6, $su-4, $su-6);
+  align-items: center;
+  background-color: $neutral-500;
+  bottom: 0;
+  color: $neutral-100;
+  display: flex;
+  font-size: $fs-3;
+  font-weight: 700;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+}

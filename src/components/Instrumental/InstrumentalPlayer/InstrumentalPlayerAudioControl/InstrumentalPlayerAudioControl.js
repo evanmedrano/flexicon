@@ -1,88 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronCircleLeft,
-  faChevronCircleRight,
-  faPlayCircle,
-  faPauseCircle,
-  faRandom,
-  faRetweet,
-} from "@fortawesome/free-solid-svg-icons";
-
+import InstrumentalPlayerAudioButton from '../InstrumentalPlayerAudioButton/InstrumentalPlayerAudioButton';
+import InstrumentalPlayerTimeControl from '../InstrumentalPlayerTimeControl/InstrumentalPlayerTimeControl';
 
 function InstrumentalPlayerAudioControl(props) {
   const {
-    looping,
-    shuffling,
     handlePreviousInstrumental,
     handleNextInstrumental,
     handleInstrumentalPause,
-    handleInstrumentalShuffle,
-    handleTimeReset,
-    playing,
-    time,
+    looping,
+    shuffling,
     handleInstrumentalPlay,
-    handleInstrumentalLoop
-  } = props
+    handleInstrumentalLoop,
+    handleInstrumentalShuffle,
+    audioElement,
+    playing,
+  } = props;
 
-  const onNextInstrumental = () => {
-    handleTimeReset();
-    handleNextInstrumental();
-  };
+  const [duration, setDuration] = useState(30);
+  const [progress, setProgress] = useState(0);
+  const [time, setTime] = useState(0);
 
-  const onPreviousInstrumental = () => {
-    if (time > 0) {
-      handleTimeReset();
-    } else {
-      handlePreviousInstrumental();
-    }
-    handleTimeReset();
-  };
+  const updateAudioTime = result => {
+    setTime(result)
+  }
+  const handleAudioProgress = () => {
+    setTime(Math.floor(audioElement.current.currentTime));
+    setProgress((time / duration) * 100);
+  }
 
-  const baseIconClass = 'instrumental-player-audio-control__icon';
-
+  const handleTimeReset = () => {
+    audioElement.current.currentTime = 0;
+    setTime(0);
+  }
 
   return (
-    <div className="instrumental-player-audio-control__buttons">
-      <FontAwesomeIcon
-        icon={faRandom}
-        title={shuffling ? "Don't shuffle" : "Shuffle"}
-        onClick={handleInstrumentalShuffle}
-        className={shuffling ? `${baseIconClass}--active` : baseIconClass}
+    <div className="instrumental-player-audio-control">
+      <InstrumentalPlayerAudioButton
+        handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalPlay={handleInstrumentalPlay}
+        handleInstrumentalLoop={handleInstrumentalLoop}
+        handleInstrumentalShuffle={handleInstrumentalShuffle}
+        handleNextInstrumental={handleNextInstrumental}
+        handlePreviousInstrumental={handlePreviousInstrumental}
+        handleTimeReset={handleTimeReset}
+        looping={looping}
+        playing={playing}
+        shuffling={shuffling}
+        time={time}
       />
-      <FontAwesomeIcon
-        icon={faChevronCircleLeft}
-        title="Previous"
-        onClick={onPreviousInstrumental}
-        className="instrumental-player-audio-control__icon ml-5"
-      />
-      {playing ? (
-        <FontAwesomeIcon
-          icon={faPauseCircle}
-          title="Pause"
-          onClick={handleInstrumentalPause}
-          className="instrumental-player-audio-control__pause-icon"
-        />
-      ) : (
-        <FontAwesomeIcon
-          icon={faPlayCircle}
-          title="Play"
-          onClick={handleInstrumentalPlay}
-          className="instrumental-player-audio-control__play-icon"
-        />
-      )}
-      <FontAwesomeIcon
-        icon={faChevronCircleRight}
-        title="Next"
-        onClick={onNextInstrumental}
-        className="instrumental-player-audio-control__icon mr-5"
-      />
-      <FontAwesomeIcon
-        icon={faRetweet}
-        title={looping ? "Don't repeat" : "Repeat"}
-        onClick={handleInstrumentalLoop}
-        className={looping ? `${baseIconClass}--active` : baseIconClass}
+      <InstrumentalPlayerTimeControl
+        audioElement={audioElement}
+        duration={duration}
+        handleAudioProgress={handleAudioProgress}
+        updateAudioTime={updateAudioTime}
+        progress={progress}
+        playing={playing}
+        time={time}
       />
     </div>
   )

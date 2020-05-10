@@ -18,7 +18,6 @@ function InstrumentalContainer() {
   const [filter, setFilter] = useState("");
   const [instrumental, setInstrumental] = useState(null);
   const [instrumentals, setInstrumentals] = useState([]);
-  const [looping, setLooping] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [previousInstrumentals, setPreviousInstrumentals] = useState([]);
   const [searchError, setSearchError] = useState(null);
@@ -157,10 +156,6 @@ function InstrumentalContainer() {
     setShuffling(!shuffling);
   }
 
-  const handleInstrumentalLoop = () => {
-    setLooping(!looping);
-  }
-
   return (
     <>
       <Container>
@@ -217,7 +212,6 @@ function InstrumentalContainer() {
       </Container>
       <InstrumentalPlayerContainer
         handleInstrumentalEnding={handleInstrumentalEnding}
-        handleInstrumentalLoop={handleInstrumentalLoop}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}
         handleInstrumentalSelect={handleInstrumentalSelect}
@@ -225,7 +219,6 @@ function InstrumentalContainer() {
         handleNextInstrumental={handleNextInstrumental}
         handlePreviousInstrumental={handlePreviousInstrumental}
         instrumental={instrumental}
-        looping={looping}
         playing={playing}
         shuffling={shuffling}
       />
