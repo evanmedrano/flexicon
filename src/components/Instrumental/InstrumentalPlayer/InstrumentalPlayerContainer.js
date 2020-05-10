@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faVolumeMute,
-  faVolumeUp
-} from "@fortawesome/free-solid-svg-icons";
-
 import * as InstrumentalPlayer from './';
 
 function InstrumentalPlayerContainer(props) {
@@ -25,15 +19,14 @@ function InstrumentalPlayerContainer(props) {
   } = props;
 
   const [duration, setDuration] = useState(30);
-  const [mute, setMute] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [mute, setMute] = useState(false);
   const [time, setTime] = useState(0);
   const [volume, setVolume] = useState(1);
 
   const instrumentalAudio = useRef(null);
   const progressBar = useRef();
   const volumeBar = useRef();
-
   const dragImage = new Image(0,0)
 
   useEffect(() => {
@@ -47,6 +40,7 @@ function InstrumentalPlayerContainer(props) {
       volumeBar.current.style.width = volume * 100 + '%';
     }
   }, [mute, volume])
+
 
   if (!instrumental) {
     return null;
@@ -164,10 +158,6 @@ function InstrumentalPlayerContainer(props) {
     }
   }
 
-  const handleMuteToggle = () => {
-    setMute(!mute)
-  }
-
   const handleAudioProgress = () => {
     setTime(Math.floor(instrumentalAudio.current.currentTime));
     setProgress((time / duration) * 100);
@@ -178,6 +168,11 @@ function InstrumentalPlayerContainer(props) {
     instrumentalAudio.current.currentTime = 0;
     setTime(0);
   }
+
+  const onInstrumentalPause = () => {
+    handleInstrumentalPause();
+    setProgress(Math.round((time / duration) * 100));
+  };
 
   const handleVolumeUpdate = event  => {
     const progressContainer = volumeBar.current.closest('.instrumental-player__draggable-container').getBoundingClientRect()
@@ -195,10 +190,9 @@ function InstrumentalPlayerContainer(props) {
     setVolume(volumeUpdate)
   }
 
-  const onInstrumentalPause = () => {
-    handleInstrumentalPause();
-    setProgress(Math.round((time / duration) * 100));
-  };
+  const handleMuteToggle = () => {
+    setMute(!mute)
+  }
 
   return (
     <div data-testid="instrumental-player" className="instrumental-player">
@@ -231,44 +225,18 @@ function InstrumentalPlayerContainer(props) {
           time={time}
         />
       </div>
+      <InstrumentalPlayer.VolumeControl
+        audioElement={instrumentalAudio}
+        handleStartOfSliderDrag={handleStartOfSliderDrag}
+        handleSliderDrag={handleSliderDrag}
+        handleEndOfSliderDrag={handleEndOfSliderDrag}
+        handleMuteToggle={handleMuteToggle}
+        handleVolumeUpdate={handleVolumeUpdate}
+        mute={mute}
+        volume={volume}
+        volumeBar={volumeBar}
+      />
 
-      <div className="instrumental-player__volume-container">
-        {mute ? (
-          <FontAwesomeIcon
-            icon={faVolumeMute}
-            title="Unmute"
-            onClick={handleMuteToggle}
-            className="instrumental-player__icon"
-          />
-        ) : (
-          <FontAwesomeIcon
-            icon={faVolumeUp}
-            title="Mute"
-            onClick={handleMuteToggle}
-            className="instrumental-player__icon"
-          />
-        )}
-        <div
-          onMouseUp={handleVolumeUpdate}
-          className="instrumental-player__draggable-container"
-          id="volume-container"
-        >
-          <div
-            ref={volumeBar}
-            className="instrumental-player__volume-bar"
-          >
-            <div
-              draggable="true"
-              onDragStart={event => handleStartOfSliderDrag(event, volumeBar)}
-              onDrag={event => handleSliderDrag(event, volumeBar)}
-              onDragEnd={event => handleEndOfSliderDrag(event, volumeBar)}
-              id="volume-circle"
-              className="instrumental-player__draggable-circle"
-            >
-            </div>
-          </div>
-        </div>
-      </div>
       <audio
         autoPlay
         id="instrumental-audio"
