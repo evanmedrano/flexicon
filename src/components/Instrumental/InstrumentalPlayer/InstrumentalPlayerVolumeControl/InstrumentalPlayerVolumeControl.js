@@ -17,7 +17,7 @@ function InstrumentalPlayerVolumeControl(props) {
   } = props;
 
   return (
-    <div className="instrumental-player__volume-container">
+    <div className="instrumental-player-volume-control">
       {mute ? (
         <FontAwesomeIcon
           icon={faVolumeMute}
@@ -38,7 +38,7 @@ function InstrumentalPlayerVolumeControl(props) {
         className="instrumental-player__draggable-container"
         id="volume-container"
       >
-        <div ref={volumeBar} className="instrumental-player__volume-bar">
+        <div ref={volumeBar} className="instrumental-player__draggable-bar">
           <div
             draggable="true"
             onDragStart={event => handleStartOfSliderDrag(event, volumeBar)}

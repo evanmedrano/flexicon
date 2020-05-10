@@ -23,11 +23,6 @@
     }
   }
 
-  &__volume-container {
-    text-align: center;
-    width: 23%;
-  }
-
   &__draggable-container {
     @include margin(null, $su-2, null, $su-2);
     background-color: $neutral-400;
@@ -35,8 +30,7 @@
     width: 100%;
   }
 
-  &__draggable-bar,
-  &__volume-bar {
+  &__draggable-bar {
     background-color: $neutral-100;
     height: 0.5rem;
     position: relative;
@@ -48,8 +42,7 @@
     -webkit-transition: width 0.6s ease;
   }
 
-  &__draggable-container:hover &__draggable-bar,
-  &__draggable-container:hover &__volume-bar {
+  &__draggable-container:hover &__draggable-bar {
     background-color: $primary-300;
   }
 
@@ -61,15 +54,5 @@
     right: -1rem;
     top: -0.5rem;
     width: 1.5rem;
-  }
-
-  &__volume-container {
-    @include padding(null, $su-6, null, $su-6);
-    align-items: center;
-    display: flex;
-  }
-
-  &__volume-container:hover &__volume-bar {
-    background-color: $primary-300;
   }
 }

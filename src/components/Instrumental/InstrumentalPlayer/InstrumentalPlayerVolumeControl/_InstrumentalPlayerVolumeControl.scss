@@ -1,0 +1,15 @@
+.instrumental-player-volume-control {
+  @include padding(null, $su-6, null, $su-6);
+  align-items: center;
+  display: flex;
+  text-align: center;
+  width: 23%;
+
+  &:hover .instrumental-player__draggable-bar {
+    background-color: $primary-300;
+  }
+
+  .instrumental-player__draggable-bar {
+    transition: width 0s;
+  }
+}
