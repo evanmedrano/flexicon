@@ -111,6 +111,7 @@ function InstrumentalItem(props) {
         onClick={addSelectedClass}
         onDoubleClick={() => handleInstrumentalSelect(instrumental)}
         ref={rowNode}
+        id={"instrumental-item__row-" + instrumental.id}
         className={activeClass + " instrumental-item__row"}
       >
         <td className="text-center">

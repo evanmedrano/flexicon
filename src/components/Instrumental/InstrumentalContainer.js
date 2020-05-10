@@ -7,7 +7,7 @@ import {
   InstrumentalDetail,
   InstrumentalFilter,
   InstrumentalList,
-  InstrumentalPlayer,
+  InstrumentalPlayerContainer,
   InstrumentalSearch,
   InstrumentalQueue
 } from './';
@@ -215,7 +215,7 @@ function InstrumentalContainer() {
           </Col>
         </Row>
       </Container>
-      <InstrumentalPlayer
+      <InstrumentalPlayerContainer
         handleInstrumentalEnding={handleInstrumentalEnding}
         handleInstrumentalLoop={handleInstrumentalLoop}
         handleInstrumentalPause={handleInstrumentalPause}
