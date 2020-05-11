@@ -1,8 +1,5 @@
 import React from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
-
 import { InstrumentalList } from "../";
 
 function InstrumentalDetail(props) {

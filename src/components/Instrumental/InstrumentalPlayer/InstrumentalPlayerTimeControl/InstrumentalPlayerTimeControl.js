@@ -6,11 +6,12 @@ function InstrumentalPlayerTimeControl(props) {
   const {
     audioElement,
     duration,
+    handleAudioDrag,
     handleAudioProgress,
+    handleTimeUpdate,
     playing,
     progress,
     time,
-    updateAudioTime
   } = props;
 
   const audioTime = useRef();
@@ -29,22 +30,6 @@ function InstrumentalPlayerTimeControl(props) {
     }
     return () => clearInterval(audioTime.current);
   }, [playing, time, progress]);
-
-  const handleTimeUpdate = update => {
-    audioElement.current.currentTime = update * duration;
-  }
-
-  const handleAudioDrag = dragLocation => {
-    let result = Math.floor(dragLocation * duration);
-
-    if (result > 30) {
-      result = 30;
-    } else if (result < 0) {
-      result = 0;
-    }
-
-    updateAudioTime(result);
-  }
 
   return (
     <div className="instrumental-player-time-control">

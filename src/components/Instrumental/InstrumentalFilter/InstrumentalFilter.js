@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function InstrumentalFilter(props) {
   const { filter, handleInstrumentalFilter, handleFilterReset } = props;
@@ -16,11 +15,11 @@ function InstrumentalFilter(props) {
         className="instrumental-filter__filter"
       />
       <FontAwesomeIcon
-        icon={faSearch}
+        icon="search"
         className="instrumental-filter__search-icon"
       />
       <FontAwesomeIcon
-        icon={faTimes}
+        icon="times"
         onClick={() => handleFilterReset()}
         className="instrumental-filter__close-icon"
       />

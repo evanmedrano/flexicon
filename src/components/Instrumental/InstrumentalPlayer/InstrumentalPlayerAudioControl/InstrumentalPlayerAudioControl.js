@@ -21,12 +21,27 @@ function InstrumentalPlayerAudioControl(props) {
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState(0);
 
-  const updateAudioTime = result => {
-    setTime(result)
-  }
   const handleAudioProgress = () => {
     setTime(Math.floor(audioElement.current.currentTime));
     setProgress((time / duration) * 100);
+  }
+
+  const handleTimeUpdate = update => {
+    const result = Math.floor(update * duration);
+    audioElement.current.currentTime = result;
+    setTime(result);
+  }
+
+  const handleAudioDrag = update => {
+    let result = Math.floor(update * duration);
+
+    if (result > 30) {
+      result = 30;
+    } else if (result < 0) {
+      result = 0;
+    }
+
+    setTime(result);
   }
 
   const handleTimeReset = () => {
@@ -52,8 +67,9 @@ function InstrumentalPlayerAudioControl(props) {
       <InstrumentalPlayerTimeControl
         audioElement={audioElement}
         duration={duration}
+        handleAudioDrag={handleAudioDrag}
         handleAudioProgress={handleAudioProgress}
-        updateAudioTime={updateAudioTime}
+        handleTimeUpdate={handleTimeUpdate}
         progress={progress}
         playing={playing}
         time={time}

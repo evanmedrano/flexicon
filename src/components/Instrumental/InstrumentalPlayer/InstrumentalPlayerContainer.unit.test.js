@@ -1,11 +1,11 @@
 import React from "react";
 
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import { screen } from "@testing-library/dom";
 
-import { InstrumentalPlayer } from "./InstrumentalPlayer";
+import { InstrumentalPlayerContainer } from "./InstrumentalPlayerContainer";
 
-describe("InstrumentalPlayer", () => {
+describe("InstrumentalPlayerContainer", () => {
   const instrumental = {
     title: "An instrumental",
     src: "my-instrumental.mp3"
@@ -19,7 +19,7 @@ describe("InstrumentalPlayer", () => {
 
   it("displays the title", () => {
     const wrapper = mount(
-      <InstrumentalPlayer instrumental={instrumental} playing={true} />
+      <InstrumentalPlayerContainer instrumental={instrumental} playing={true} />
     );
 
     expect(wrapper.find(".instrumental-player-detail__title").text()).toEqual(
@@ -28,8 +28,8 @@ describe("InstrumentalPlayer", () => {
   });
 
   it("displays the instrumental duration", () => {
-    const wrapper = shallow(
-      <InstrumentalPlayer instrumental={instrumental} playing={true} />
+    const wrapper = mount(
+      <InstrumentalPlayerContainer instrumental={instrumental} playing={true} />
     );
 
     expect(wrapper.find(".instrumental-player__duration").text()).toEqual(
@@ -38,8 +38,8 @@ describe("InstrumentalPlayer", () => {
   });
 
   it("displays the audio controls", () => {
-    const wrapper = shallow(
-      <InstrumentalPlayer instrumental={instrumental} playing={true} />
+    const wrapper = mount(
+      <InstrumentalPlayerContainer instrumental={instrumental} playing={true} />
     );
 
     expect(
@@ -48,8 +48,8 @@ describe("InstrumentalPlayer", () => {
   });
 
   it("displays the volume controls", () => {
-    const wrapper = shallow(
-      <InstrumentalPlayer instrumental={instrumental} playing={true} />
+    const wrapper = mount(
+      <InstrumentalPlayerContainer instrumental={instrumental} playing={true} />
     );
 
     expect(
@@ -59,8 +59,8 @@ describe("InstrumentalPlayer", () => {
 
   it('toggles the play and pause icons', () => {
     const handleInstrumentalPause = jest.fn();
-    const wrapper = shallow(
-      <InstrumentalPlayer
+    const wrapper = mount(
+      <InstrumentalPlayerContainer
         handleInstrumentalPause={handleInstrumentalPause}
         instrumental={instrumental}
         playing={true}

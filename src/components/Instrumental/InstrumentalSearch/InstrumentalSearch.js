@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function InstrumentalSearch({ handleFormSubmit, searchError }) {
   const [search, setSearch] = useState("");
@@ -19,7 +18,7 @@ function InstrumentalSearch({ handleFormSubmit, searchError }) {
           {searchError ? searchError : ""}
         </h2>
         <FontAwesomeIcon
-          icon={faSearch}
+          icon="search"
           className="instrumental-search__icon"
         />
         <input

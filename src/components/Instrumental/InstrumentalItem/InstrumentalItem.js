@@ -1,17 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart as unlikedBeat,
-  faPlayCircle,
-  faPauseCircle
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  faHeart as likedBeat,
-  faEllipsisH,
-  faMusic,
-  faVolumeUp
-} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 
 import { truncate } from "../../../utilities";
@@ -118,40 +107,40 @@ function InstrumentalItem(props) {
           {playing && activeInstrumental ? (
             <>
               <FontAwesomeIcon
-                icon={faPauseCircle}
+                icon="pause-circle"
                 onClick={onInstrumentalPause}
                 className="instrumental-item__icon instrumental-item__pause-icon"
               />
               <FontAwesomeIcon
-                icon={faVolumeUp}
+                icon="volume-up"
                 className="instrumental-item__icon instrumental-item__speaker-icon"
               />
             </>
           ) : (
             <>
               <FontAwesomeIcon
-                icon={faPlayCircle}
+                icon="play-circle"
                 onClick={onInstrumentalPlay}
                 className="instrumental-item__icon instrumental-item__active-play-icon"
               />
               <FontAwesomeIcon
-                icon={faMusic}
+                icon="music"
                 className="instrumental-item__icon instrumental-item__active-note-icon"
               />
             </>
           )}
           <FontAwesomeIcon
-            icon={faMusic}
+            icon="music"
             className="instrumental-item__icon instrumental-item__note-icon"
           />
           <FontAwesomeIcon
-            icon={faPlayCircle}
+            icon="play-circle"
             onClick={onInstrumentalPlay}
             className="instrumental-item__icon instrumental-item__play-icon"
           />
         </td>
         <td className="instrumental-item__heart pl-3">
-          <FontAwesomeIcon icon={unlikedBeat} />
+          <FontAwesomeIcon icon={['far', 'heart']} />
         </td>
         <td className="pl-3 instrumental-item__title">
           <span>{truncate(instrumental.title, 40)}</span>
@@ -167,7 +156,7 @@ function InstrumentalItem(props) {
           className="pl-5 pr-3 text-center position-relative"
         >
           <FontAwesomeIcon
-            icon={faEllipsisH}
+            icon="ellipsis-h"
             title="More"
             className="instrumental-item__ellipsis"
           />

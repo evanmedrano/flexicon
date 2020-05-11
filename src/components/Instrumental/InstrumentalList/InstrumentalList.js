@@ -1,7 +1,6 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 
 import { InstrumentalItem } from "../";
 
@@ -133,7 +132,7 @@ function InstrumentalList(props) {
               </span>
             </th>
             <th className="pl-3 instrumental-list__calendar">
-              <FontAwesomeIcon icon={faCalendarAlt} />
+              <FontAwesomeIcon icon={['far', 'calendar-alt']} />
             </th>
             <th>
               <span className="invisible">Options</span>

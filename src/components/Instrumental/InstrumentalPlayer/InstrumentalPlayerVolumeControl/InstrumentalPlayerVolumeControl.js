@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 
 import InstrumentalPlayerSlider from '../InstrumentalPlayerSlider/InstrumentalPlayerSlider';
 
@@ -39,14 +38,14 @@ function InstrumentalPlayerVolumeControl({ audioElement }) {
       <div className="instrumental-player-volume-control">
         {mute ? (
           <FontAwesomeIcon
-            icon={faVolumeMute}
+            icon="volume-mute"
             title="Unmute"
             onClick={handleMuteToggle}
             className="instrumental-player__icon"
           />
         ) : (
           <FontAwesomeIcon
-            icon={faVolumeUp}
+            icon="volume-up"
             title="Mute"
             onClick={handleMuteToggle}
             className="instrumental-player__icon"

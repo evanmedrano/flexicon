@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import '../styles/index.scss';
+
 import Routes from '../routes';
+import FontAwesome from '../components/FontAwesome';
+
+import '../styles/index.scss';
 import { Header, Footer } from '../components';
 
 function App() {

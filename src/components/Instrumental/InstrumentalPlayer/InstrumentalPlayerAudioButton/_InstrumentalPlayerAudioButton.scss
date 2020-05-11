@@ -1,9 +1,7 @@
-.instrumental-player-audio-control {
-  &__buttons {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
+.instrumental-player-audio-button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 
   &__icon {
     color: $neutral-300;

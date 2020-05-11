@@ -9,12 +9,12 @@ function InstrumentalPlayerSlider(props) {
     sliderControl
   } = props;
 
-  const dragImage = new Image(0,0)
-  const baseClass = "instrumental-player-slider"
+  const dragImage = new Image(0,0);
+  const baseClass = "instrumental-player-slider";
 
   useEffect(() => {
     dragImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
-  }, [])
+  }, []);
 
   const handleSliderUpdate = event => {
     const result = getClickToSliderRatio(event);
@@ -39,37 +39,15 @@ function InstrumentalPlayerSlider(props) {
   const handleSliderDrag = event => {
     event.dataTransfer.setDragImage(dragImage, 0, 0);
     const result = getClickToSliderRatio(event);
-    const percentage = result * 100;
 
-    if (percentage > 100) {
-      handleSliderState(1);
-      return sliderControl === 'volume' ? handleVolumeUpdate(1) : handleAudioDrag(result);
-    } else if (percentage < 0) {
-      handleSliderState(0);
-      return sliderControl === 'volume' ? handleVolumeUpdate(0) : handleAudioDrag(result);
-    }
-
-    handleSliderState(result);
-    return sliderControl === 'volume' ? handleVolumeUpdate(result) : handleAudioDrag(result);
+    handleDragPercentage(result, 'drag');
   }
 
   const handleEndOfSliderDrag = event => {
     event.dataTransfer.setDragImage(dragImage, 0, 0);
     const result = getClickToSliderRatio(event);
-    const percentage = result * 100;
 
-    if (percentage > 100) {
-      handleSliderState(1);
-      handleSliderControlUpdate(1)
-      return;
-    } else if (percentage < 0) {
-      handleSliderState(0);
-      handleSliderControlUpdate(0)
-      return;
-    }
-
-    handleSliderState(result);
-    handleSliderControlUpdate(result);
+    handleDragPercentage(result);
   }
 
   const getClickToSliderRatio = event => {
@@ -85,16 +63,32 @@ function InstrumentalPlayerSlider(props) {
     return sliderElement.getBoundingClientRect();
   }
 
+  const handleDragPercentage = (result, eventType) => {
+    const percentage = result * 100;
+
+    if (percentage > 100) {
+      handleSliderUpdates(1, eventType);
+    } else if (percentage < 0) {
+      handleSliderUpdates(0, eventType);
+    } else {
+      handleSliderUpdates(result, eventType);
+    }
+  }
+
+  const handleSliderUpdates = (result, eventType) => {
+    handleSliderState(result);
+    return handleSliderControlUpdate(result, eventType);
+  }
+
   const handleSliderState = state => {
     slider.current.style.width = state * 100 + '%';
   }
 
-  const handleSliderControlUpdate = result => {
+  const handleSliderControlUpdate = (result, eventType) => {
     if (sliderControl === 'volume') {
-      return handleVolumeUpdate(result)
-    } else {
-      return handleTimeUpdate(result)
+      return handleVolumeUpdate(result);
     }
+    eventType === 'drag' ? handleAudioDrag(result) : handleTimeUpdate(result);
   }
 
   return (
