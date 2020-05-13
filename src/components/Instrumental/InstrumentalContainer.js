@@ -13,7 +13,6 @@ import {
 } from './';
 
 function InstrumentalContainer() {
-  const [activeInstrumental, setActiveInstrumental] = useState(null);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("");
   const [currentInstrumental, setCurrentInstrumental] = useState(null);

@@ -8,7 +8,6 @@ import { truncate } from "../../../utilities";
 function InstrumentalItem(props) {
   const {
     activeClass,
-    activeInstrumental,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
@@ -83,16 +82,16 @@ function InstrumentalItem(props) {
   };
 
   const handleQueue = () => {
-    if (queueText === 'Remove from queue') {
+    if (queueText === "Remove from queue") {
       handleQueueRemove(instrumental);
     } else {
       handleQueueAdd(instrumental);
     }
-  }
+  };
 
   const addSelectedClass = () => {
-    rowNode.current.classList.toggle('instrumental-item__selected');
-  }
+    rowNode.current.classList.toggle("instrumental-item__selected");
+  };
 
   return (
     <>
@@ -104,7 +103,7 @@ function InstrumentalItem(props) {
         className={activeClass + " instrumental-item__row"}
       >
         <td className="text-center">
-          {playing && activeInstrumental ? (
+          {playing && instrumental ? (
             <>
               <FontAwesomeIcon
                 icon="pause-circle"
@@ -140,7 +139,7 @@ function InstrumentalItem(props) {
           />
         </td>
         <td className="instrumental-item__heart pl-3">
-          <FontAwesomeIcon icon={['far', 'heart']} />
+          <FontAwesomeIcon icon={["far", "heart"]} />
         </td>
         <td className="pl-3 instrumental-item__title">
           <span>{truncate(instrumental.title, 40)}</span>
