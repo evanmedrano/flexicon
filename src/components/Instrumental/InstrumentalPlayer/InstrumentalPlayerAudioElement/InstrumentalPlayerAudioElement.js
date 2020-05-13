@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 function InstrumentalPlayerAudioElement(props) {
   const {
     audioElement,
+    currentInstrumental,
     handleInstrumentalEnding,
     handleInstrumentalPause,
     handleInstrumentalPlay,
-    instrumental,
     looping,
     playing
   } = props;
@@ -39,13 +39,13 @@ function InstrumentalPlayerAudioElement(props) {
       <audio
         autoPlay
         id="instrumental-audio"
-        onEnded={() => handleInstrumentalEnding(instrumental)}
-        key={instrumental.id}
+        onEnded={() => handleInstrumentalEnding(currentInstrumental)}
+        key={currentInstrumental.id}
         ref={audioElement}
         onPlay={handleInstrumentalPlay}
         onPause={handleInstrumentalPause}
       >
-        <source src={instrumental.track || instrumental.preview} />
+        <source src={currentInstrumental.track || currentInstrumental.preview} />
       </audio>
     </div>
   )

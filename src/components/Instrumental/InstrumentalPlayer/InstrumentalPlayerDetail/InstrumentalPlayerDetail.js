@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { truncate } from "../../../../utilities";
 
-function InstrumentalPlayerDetail({ instrumental }) {
+function InstrumentalPlayerDetail({ currentInstrumental }) {
   return (
     <div className="instrumental-player-detail">
       <span className="mr-4 instrumental-player-detail__title">
-        {truncate(instrumental.title, 30)}
+        {truncate(currentInstrumental.title, 30)}
       </span>
       <FontAwesomeIcon icon={['far', 'heart']} />
     </div>

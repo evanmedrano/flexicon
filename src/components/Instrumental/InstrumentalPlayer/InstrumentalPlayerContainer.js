@@ -4,13 +4,13 @@ import * as InstrumentalPlayer from './';
 
 function InstrumentalPlayerContainer(props) {
   const {
+    currentInstrumental,
     handleInstrumentalEnding,
     handleInstrumentalPause,
     handleInstrumentalPlay,
     handleInstrumentalShuffle,
     handleNextInstrumental,
     handlePreviousInstrumental,
-    instrumental,
     playing,
     shuffling
   } = props;
@@ -18,7 +18,7 @@ function InstrumentalPlayerContainer(props) {
   const [looping, setLooping] = useState(false);
   const audioElement = useRef(null);
 
-  if (!instrumental) {
+  if (!currentInstrumental) {
     return null;
   }
 
@@ -28,7 +28,7 @@ function InstrumentalPlayerContainer(props) {
 
   return (
     <div data-testid="instrumental-player" className="instrumental-player-container">
-      <InstrumentalPlayer.Detail instrumental={instrumental} />
+      <InstrumentalPlayer.Detail currentInstrumental={currentInstrumental} />
       <InstrumentalPlayer.AudioControl
         audioElement={audioElement}
         handleInstrumentalLoop={handleInstrumentalLoop}
@@ -47,7 +47,7 @@ function InstrumentalPlayerContainer(props) {
         handleInstrumentalEnding={handleInstrumentalEnding}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}
-        instrumental={instrumental}
+        currentInstrumental={currentInstrumental}
         looping={looping}
         playing={playing}
       />

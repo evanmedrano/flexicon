@@ -1,40 +1,44 @@
 import React from "react";
 
-import { InstrumentalList } from "../";
+import { InstrumentalItem, InstrumentalTable } from "../";
 
 function InstrumentalDetail(props) {
   const {
-    activeInstrumental,
+    currentInstrumental,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
-    instrumental,
     playing,
-    queueInstrumentals,
-    shuffledInstrumental
+    queue
   } = props;
+
+  if (!currentInstrumental) {
+    return (
+      <h4 className="mt-3 ml-4">
+        Please select an instrumental to get started
+      </h4>
+    );
+  }
 
   return (
     <div>
-      <InstrumentalList
-        activeClass="instrumental-item__active"
-        activeInstrumental={activeInstrumental}
-        filter=''
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        handleQueueRemove={handleQueueRemove}
-        heading="Now Playing"
-        instrumental={instrumental}
-        instrumentals={[]}
-        playing={playing}
-        queueInstrumentals={queueInstrumentals}
-        shuffledInstrumental={shuffledInstrumental}
-      />
-      <h4 className="mt-3 ml-4">
-        {!instrumental ? "Please select an instrumental to get started." : ""}
-      </h4>
+      <InstrumentalTable heading="Now Playing">
+        <InstrumentalItem
+          activeClass="instrumental-item__active"
+          handleInstrumentalPause={handleInstrumentalPause}
+          handleInstrumentalSelect={handleInstrumentalSelect}
+          handleQueueAdd={handleQueueAdd}
+          handleQueueRemove={handleQueueRemove}
+          instrumental={currentInstrumental}
+          playing={playing}
+          queueText={
+            queue.includes(currentInstrumental)
+              ? "Remove from queue"
+              : "Add to queue"
+          }
+        />
+      </InstrumentalTable>
     </div>
   );
 }

@@ -5,4 +5,5 @@ export { InstrumentalItem } from './InstrumentalItem/InstrumentalItem';
 export { InstrumentalList } from './InstrumentalList/InstrumentalList';
 export { InstrumentalPlayerContainer } from './InstrumentalPlayer/InstrumentalPlayerContainer';
 export { InstrumentalSearch } from './InstrumentalSearch/InstrumentalSearch';
+export { InstrumentalTable } from './InstrumentalTable/InstrumentalTable';
 export { InstrumentalQueue } from './InstrumentalQueue/InstrumentalQueue';

@@ -1,50 +1,58 @@
-import React from 'react';
+import React from "react";
 
-import { InstrumentalList } from '../';
+import { InstrumentalItem, InstrumentalTable } from "../";
 
 function InstrumentalQueue(props) {
   const {
-    activeInstrumental,
-    filter,
+    currentInstrumental,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     handleQueueReset,
     playing,
-    queue,
-    queueInstrumentals
+    queue
   } = props;
 
   if (queue.length === 0) {
     return null;
   }
 
+  const renderedInstrumentals = queue.map(instrumental => {
+    const activeStyle = "instrumental-item__active";
+
+    return (
+      <InstrumentalItem
+        key={instrumental.id}
+        activeClass={instrumental === currentInstrumental ? activeStyle : ""}
+        handleInstrumentalPause={handleInstrumentalPause}
+        handleInstrumentalSelect={handleInstrumentalSelect}
+        handleQueueAdd={handleQueueAdd}
+        handleQueueRemove={handleQueueRemove}
+        instrumental={instrumental}
+        playing={playing}
+        queueText={
+          queue.includes(instrumental) ? "Remove from queue" : "Add to queue"
+        }
+      />
+    );
+  });
+
   return (
-    <div className="instrumental-queue">
+    <div className="instrumental-queue mt-5">
       <div className="d-flex justify-content-between align-items-baseline">
         <h2>Next In Queue</h2>
         <hr className="border-bottom mb-4" />
         <button
-          onClick={() => handleQueueReset()}
+          onClick={handleQueueReset}
           className="button button--outline button--round"
         >
           Clear
         </button>
       </div>
-      <InstrumentalList
-        activeInstrumental={activeInstrumental}
-        filter=''
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        handleQueueRemove={handleQueueRemove}
-        instrumentals={queue}
-        playing={playing}
-        queueInstrumentals={queueInstrumentals}
-      />
+      <InstrumentalTable>{renderedInstrumentals}</InstrumentalTable>
     </div>
-  )
+  );
 }
 
 export { InstrumentalQueue };

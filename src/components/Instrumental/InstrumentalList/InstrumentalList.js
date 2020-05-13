@@ -1,12 +1,10 @@
 import React from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { InstrumentalItem } from "../";
+import { InstrumentalItem, InstrumentalTable } from "../";
 
 function InstrumentalList(props) {
   const {
-    activeInstrumental,
+    currentInstrumental,
     error,
     filter,
     handleFilterReset,
@@ -14,37 +12,17 @@ function InstrumentalList(props) {
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
-    heading,
-    instrumental,
     instrumentals,
     playing,
-    queueInstrumentals
+    queue
   } = props;
 
   if (error) {
     return (
-      <h2 className="instrumental-list__error">
+      <h2 className="instrumental-table__error">
         There was an error loading the instrumentals
       </h2>
     );
-  }
-
-  const nowPlaying = () => {
-    return (
-      <InstrumentalItem
-        activeClass='instrumental-item__active'
-        activeInstrumental={activeInstrumental}
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        handleQueueRemove={handleQueueRemove}
-        instrumental={instrumental}
-        playing={playing}
-        queueText={
-          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
-        }
-      />
-    )
   }
 
   const filteredInstrumentals = instrumentals.filter(instrumental => {
@@ -56,96 +34,48 @@ function InstrumentalList(props) {
       return (
         <>
           <tr>
-            <td colSpan="4" className="instrumental-list__no-filter">
+            <td colSpan="4" className="instrumental-table__no-filter">
               <span className="mr-2">No results for "{filter}".</span>
               <span
-                onClick={() => handleFilterReset()}
-                className="instrumental-list__reset"
+                onClick={handleFilterReset}
+                className="instrumental-table__reset"
               >
                 Remove Filter.
               </span>
             </td>
           </tr>
         </>
-      )
+      );
     }
-  }
+  };
 
-  const filteredInstrumentalList = filteredInstrumentals.map(instrumental => {
-    const activeStyle = 'instrumental-item__active'
+  const instrumentalsList = filter ? filteredInstrumentals : instrumentals;
 
-    return (
-      <InstrumentalItem
-        key={instrumental.id}
-        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
-        activeInstrumental={activeInstrumental}
-        handleInstrumentalPause={handleInstrumentalPause}
-        handleInstrumentalSelect={handleInstrumentalSelect}
-        handleQueueAdd={handleQueueAdd}
-        handleQueueRemove={handleQueueRemove}
-        instrumental={instrumental}
-        playing={playing}
-        queueText={
-          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
-        }
-      />
-    )
-  })
-
-  const instrumentalsList = instrumentals.map(instrumental => {
-    const activeStyle = 'instrumental-item__active'
+  const renderedInstrumentals = instrumentalsList.map(instrumental => {
+    const activeStyle = "instrumental-item__active";
 
     return (
       <InstrumentalItem
         key={instrumental.id}
-        activeClass={instrumental === activeInstrumental ? activeStyle : ''}
-        activeInstrumental={activeInstrumental}
+        activeClass={instrumental === currentInstrumental ? activeStyle : ""}
+        instrumental={instrumental}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
-        instrumental={instrumental}
         playing={playing}
         queueText={
-          queueInstrumentals.includes(instrumental) ? 'Remove from queue' : 'Add to queue'
+          queue.includes(instrumental) ? "Remove from queue" : "Add to queue"
         }
       />
     );
   });
 
   return (
-    <div className="instrumental-list">
-      <h2>{heading}</h2>
-      <hr className="border-bottom mb-4" />
-      <table className="instrumental-list__table">
-        <thead>
-          <tr className="instrumental-list__table-headers">
-            <th className="instrumental-list__play-header">
-              <span className="invisible">Play</span>
-            </th>
-            <th className="instrumental-list__like-header">
-              <span className="invisible">Like</span>
-            </th>
-            <th className="pl-3 instrumental-list__title-header">
-              <span>
-                Title
-              </span>
-            </th>
-            <th className="pl-3 instrumental-list__calendar">
-              <FontAwesomeIcon icon={['far', 'calendar-alt']} />
-            </th>
-            <th>
-              <span className="invisible">Options</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="instrumental-list__tbody">
-          {instrumental ? nowPlaying() : null}
-          {filter ? filteredInstrumentalList : instrumentalsList}
-          {noFilteredInstrumentals()}
-        </tbody>
-      </table>
-    </div>
+    <InstrumentalTable heading="Up Next">
+      {noFilteredInstrumentals()}
+      {renderedInstrumentals}
+    </InstrumentalTable>
   );
 }
 
