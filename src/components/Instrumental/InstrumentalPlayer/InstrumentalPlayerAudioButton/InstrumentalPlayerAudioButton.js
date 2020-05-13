@@ -4,17 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function InstrumentalPlayerAudioButton(props) {
   const {
-    looping,
-    shuffling,
-    handlePreviousInstrumental,
-    handleNextInstrumental,
+    audioElement,
     handleInstrumentalPause,
-    handleInstrumentalShuffle,
-    handleTimeReset,
-    playing,
-    time,
     handleInstrumentalPlay,
-    handleInstrumentalLoop
+    handleInstrumentalLoop,
+    handleInstrumentalShuffle,
+    handleNextInstrumental,
+    handlePreviousInstrumental,
+    handleTimeReset,
+    looping,
+    playing,
+    shuffling,
+    time
   } = props
 
   const onNextInstrumental = () => {
@@ -32,7 +33,6 @@ function InstrumentalPlayerAudioButton(props) {
   };
 
   const baseIconClass = 'instrumental-player-audio-button__icon';
-
 
   return (
     <div className="instrumental-player-audio-button">

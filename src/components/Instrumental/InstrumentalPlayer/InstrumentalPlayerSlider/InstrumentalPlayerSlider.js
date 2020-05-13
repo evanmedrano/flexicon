@@ -3,8 +3,10 @@ import React, { useEffect } from 'react';
 function InstrumentalPlayerSlider(props) {
   const {
     handleAudioDrag,
+    handleMuteToggle,
     handleTimeUpdate,
     handleVolumeUpdate,
+    mute,
     slider,
     sliderControl
   } = props;
@@ -86,9 +88,16 @@ function InstrumentalPlayerSlider(props) {
 
   const handleSliderControlUpdate = (result, eventType) => {
     if (sliderControl === 'volume') {
+      checkMuteState();
       return handleVolumeUpdate(result);
     }
     eventType === 'drag' ? handleAudioDrag(result) : handleTimeUpdate(result);
+  }
+
+  const checkMuteState = () => {
+    if (sliderControl === 'volume' && mute) {
+      handleMuteToggle();
+    }
   }
 
   return (

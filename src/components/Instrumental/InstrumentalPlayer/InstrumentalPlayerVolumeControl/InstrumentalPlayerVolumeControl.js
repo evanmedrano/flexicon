@@ -1,37 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import InstrumentalPlayerSlider from '../InstrumentalPlayerSlider/InstrumentalPlayerSlider';
+import InstrumentalPlayerSlider from "../InstrumentalPlayerSlider/InstrumentalPlayerSlider";
 
-function InstrumentalPlayerVolumeControl({ audioElement }) {
-  const [mute, setMute] = useState(false);
-  const [volume, setVolume] = useState(1);
-  const volumeBar = useRef()
-
-  useEffect(() => {
-    if (mute) {
-      handleVolumeLevel(0);
-    } else {
-      handleVolumeLevel(volume);
-    }
-  }, [mute])
-
-  const handleMuteToggle = () => {
-    setMute(!mute)
-  }
-
-  const handleVolumeLevel = volumeLevel => {
-    audioElement.current.volume = volumeLevel;
-    volumeBar.current.style.width = volumeLevel * 100 + '%';
-  }
-
-  const handleVolumeUpdate = update => {
-    const volumeUpdate = update * 10 / 10;
-
-    audioElement.current.volume = volumeUpdate;
-    setVolume(volumeUpdate);
-  }
+function InstrumentalPlayerVolumeControl(props) {
+  const {
+    audioElement,
+    mute,
+    volume,
+    handleVolumeLevel,
+    handleMuteToggle,
+    handleVolumeUpdate,
+    volumeBar
+  } = props;
 
   return (
     <>
@@ -52,13 +34,15 @@ function InstrumentalPlayerVolumeControl({ audioElement }) {
           />
         )}
         <InstrumentalPlayerSlider
+          handleMuteToggle={handleMuteToggle}
           handleVolumeUpdate={handleVolumeUpdate}
+          mute={mute}
           slider={volumeBar}
           sliderControl="volume"
         />
       </div>
     </>
-  )
+  );
 }
 
 export default InstrumentalPlayerVolumeControl;

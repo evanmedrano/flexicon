@@ -5,16 +5,16 @@ import InstrumentalPlayerTimeControl from '../InstrumentalPlayerTimeControl/Inst
 
 function InstrumentalPlayerAudioControl(props) {
   const {
+    audioElement,
+    handleInstrumentalLoop,
+    handleInstrumentalPause,
+    handleInstrumentalPlay,
+    handleInstrumentalShuffle,
     handlePreviousInstrumental,
     handleNextInstrumental,
-    handleInstrumentalPause,
     looping,
     shuffling,
-    handleInstrumentalPlay,
-    handleInstrumentalLoop,
-    handleInstrumentalShuffle,
-    audioElement,
-    playing,
+    playing
   } = props;
 
   const [duration, setDuration] = useState(30);
@@ -52,6 +52,7 @@ function InstrumentalPlayerAudioControl(props) {
   return (
     <div className="instrumental-player-audio-control">
       <InstrumentalPlayerAudioButton
+        audioElement={audioElement}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}
         handleInstrumentalLoop={handleInstrumentalLoop}
