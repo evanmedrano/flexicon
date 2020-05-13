@@ -27,4 +27,4 @@ function InstrumentalFilter(props) {
   )
 }
 
-export { InstrumentalFilter };
+export default InstrumentalFilter ;

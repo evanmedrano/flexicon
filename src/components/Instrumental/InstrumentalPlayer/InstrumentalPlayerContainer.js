@@ -55,4 +55,4 @@ function InstrumentalPlayerContainer(props) {
   );
 }
 
-export { InstrumentalPlayerContainer };
+export default InstrumentalPlayerContainer;

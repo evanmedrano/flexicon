@@ -1,9 +1,9 @@
 export { InstrumentalContainer } from './InstrumentalContainer';
-export { InstrumentalDetail } from './InstrumentalDetail/InstrumentalDetail';
-export { InstrumentalFilter } from './InstrumentalFilter/InstrumentalFilter';
-export { InstrumentalItem } from './InstrumentalItem/InstrumentalItem';
-export { InstrumentalList } from './InstrumentalList/InstrumentalList';
-export { InstrumentalPlayerContainer } from './InstrumentalPlayer/InstrumentalPlayerContainer';
-export { InstrumentalSearch } from './InstrumentalSearch/InstrumentalSearch';
-export { InstrumentalTable } from './InstrumentalTable/InstrumentalTable';
-export { InstrumentalQueue } from './InstrumentalQueue/InstrumentalQueue';
+export { default as Detail } from './InstrumentalDetail/InstrumentalDetail';
+export { default as Filter } from './InstrumentalFilter/InstrumentalFilter';
+export { default as ItemContainer } from './InstrumentalItem/InstrumentalItemContainer';
+export { default as List } from './InstrumentalList/InstrumentalList';
+export { default as PlayerContainer } from './InstrumentalPlayer/InstrumentalPlayerContainer';
+export { default as Search } from './InstrumentalSearch/InstrumentalSearch';
+export { default as Table } from './InstrumentalTable/InstrumentalTable';
+export { default as Queue } from './InstrumentalQueue/InstrumentalQueue';

@@ -39,4 +39,4 @@ function InstrumentalTable({ children, heading }) {
   );
 }
 
-export { InstrumentalTable };
+export default InstrumentalTable ;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { InstrumentalItem, InstrumentalTable } from "../";
+import * as Instrumental from "../";
 
 function InstrumentalDetail(props) {
   const {
@@ -23,8 +23,8 @@ function InstrumentalDetail(props) {
 
   return (
     <div>
-      <InstrumentalTable heading="Now Playing">
-        <InstrumentalItem
+      <Instrumental.Table heading="Now Playing">
+        <Instrumental.ItemContainer
           activeClass="instrumental-item__active"
           handleInstrumentalPause={handleInstrumentalPause}
           handleInstrumentalSelect={handleInstrumentalSelect}
@@ -38,9 +38,9 @@ function InstrumentalDetail(props) {
               : "Add to queue"
           }
         />
-      </InstrumentalTable>
+      </Instrumental.Table>
     </div>
   );
 }
 
-export { InstrumentalDetail };
+export default InstrumentalDetail ;

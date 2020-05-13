@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { InstrumentalItem, InstrumentalTable } from "../";
+import rails from '../../../apis/rails';
+import * as Instrumental from "../";
 
 function InstrumentalList(props) {
   const {
     currentInstrumental,
-    error,
     filter,
     handleFilterReset,
     handleInstrumentalPause,
+    handleInstrumentalsRequest,
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
@@ -17,11 +18,29 @@ function InstrumentalList(props) {
     queue
   } = props;
 
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    rails
+      .get('/instrumentals')
+      .then(response => {
+        handleInstrumentalsRequest(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [])
+
   if (error) {
     return (
-      <h2 className="instrumental-table__error">
+      <h3 className="instrumental-table__error">
         There was an error loading the instrumentals
-      </h2>
+      </h3>
     );
   }
 
@@ -29,25 +48,23 @@ function InstrumentalList(props) {
     return instrumental.title.toLowerCase().includes(filter.toLowerCase());
   });
 
-  const noFilteredInstrumentals = () => {
-    if (filter && filteredInstrumentals.length === 0) {
-      return (
-        <>
-          <tr>
-            <td colSpan="4" className="instrumental-table__no-filter">
-              <span className="mr-2">No results for "{filter}".</span>
-              <span
-                onClick={handleFilterReset}
-                className="instrumental-table__reset"
-              >
-                Remove Filter.
-              </span>
-            </td>
-          </tr>
-        </>
-      );
-    }
-  };
+  if (filter && filteredInstrumentals.length === 0) {
+    return (
+      <>
+        <tr>
+          <td colSpan="4" className="instrumental-table__no-filter">
+            <span className="mr-2">No results for "{filter}".</span>
+            <span
+              onClick={handleFilterReset}
+              className="instrumental-table__reset"
+            >
+              Remove Filter.
+            </span>
+          </td>
+        </tr>
+      </>
+    );
+  }
 
   const instrumentalsList = filter ? filteredInstrumentals : instrumentals;
 
@@ -55,7 +72,7 @@ function InstrumentalList(props) {
     const activeStyle = "instrumental-item__active";
 
     return (
-      <InstrumentalItem
+      <Instrumental.ItemContainer
         key={instrumental.id}
         activeClass={instrumental === currentInstrumental ? activeStyle : ""}
         instrumental={instrumental}
@@ -72,11 +89,14 @@ function InstrumentalList(props) {
   });
 
   return (
-    <InstrumentalTable heading="Up Next">
-      {noFilteredInstrumentals()}
-      {renderedInstrumentals}
-    </InstrumentalTable>
+    <div>
+      <h3>{loading ? "Loading your instrumentals..." : ""}</h3>
+
+      <Instrumental.Table heading="Up Next">
+        {renderedInstrumentals}
+      </Instrumental.Table>
+    </div>
   );
 }
 
-export { InstrumentalList };
+export default InstrumentalList ;

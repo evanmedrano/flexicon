@@ -2,25 +2,42 @@ import React, { useState } from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function InstrumentalSearch({ handleFormSubmit, searchError }) {
+import rails from '../../../apis/rails';
+
+function InstrumentalSearch({ handleInstrumentalSelect }) {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  function handleInstrumentalSearch(event) {
-    event.preventDefault();
+  const handleFormSubmit = event => {
+    event.preventDefault()
+    setLoading(true);
 
-    handleFormSubmit(search);
-  }
+    rails
+      .get(`instrumentals/${search}`)
+      .then(response => {
+        if (response.data.data) {
+          handleInstrumentalSelect(response.data.data[0]);
+          setError(null);
+          setLoading(false);
+        } else {
+          setError(response.data.error);
+          setLoading(false);
+        }
+      })
+  };
+
 
   return (
     <div className="instrumental-search">
-      <form onSubmit={handleInstrumentalSearch} className="position-relative">
-        <h2 className="instrumental-search__error">
-          {searchError ? searchError : ""}
-        </h2>
-        <FontAwesomeIcon
-          icon="search"
-          className="instrumental-search__icon"
-        />
+      <form onSubmit={handleFormSubmit} className="position-relative">
+        <h3 className="instrumental-search__error">
+          {error ? error : ""}
+        </h3>
+        <h3>
+          {loading ? "Searching for your instrumental..." : ""}
+        </h3>
+        <FontAwesomeIcon icon="search" className="instrumental-search__icon" />
         <input
           type="text"
           onChange={event => setSearch(event.target.value)}
@@ -33,4 +50,4 @@ function InstrumentalSearch({ handleFormSubmit, searchError }) {
   );
 }
 
-export { InstrumentalSearch };
+export default InstrumentalSearch;

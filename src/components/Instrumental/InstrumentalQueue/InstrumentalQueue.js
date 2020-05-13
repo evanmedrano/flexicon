@@ -1,6 +1,6 @@
 import React from "react";
 
-import { InstrumentalItem, InstrumentalTable } from "../";
+import * as Instrumental from "../";
 
 function InstrumentalQueue(props) {
   const {
@@ -22,7 +22,7 @@ function InstrumentalQueue(props) {
     const activeStyle = "instrumental-item__active";
 
     return (
-      <InstrumentalItem
+      <Instrumental.ItemContainer
         key={instrumental.id}
         activeClass={instrumental === currentInstrumental ? activeStyle : ""}
         handleInstrumentalPause={handleInstrumentalPause}
@@ -50,9 +50,9 @@ function InstrumentalQueue(props) {
           Clear
         </button>
       </div>
-      <InstrumentalTable>{renderedInstrumentals}</InstrumentalTable>
+      <Instrumental.Table>{renderedInstrumentals}</Instrumental.Table>
     </div>
   );
 }
 
-export { InstrumentalQueue };
+export default InstrumentalQueue;

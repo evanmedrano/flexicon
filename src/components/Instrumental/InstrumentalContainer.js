@@ -1,164 +1,137 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from "reactstrap";
 
-import rails from '../../apis/rails';
-import {
-  InstrumentalDetail,
-  InstrumentalFilter,
-  InstrumentalList,
-  InstrumentalPlayerContainer,
-  InstrumentalSearch,
-  InstrumentalQueue
-} from './';
+import * as Instrumental from "./";
 
 function InstrumentalContainer() {
-  const [error, setError] = useState(null);
   const [filter, setFilter] = useState("");
   const [currentInstrumental, setCurrentInstrumental] = useState(null);
   const [instrumentals, setInstrumentals] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [previousInstrumentals, setPreviousInstrumentals] = useState([]);
-  const [searchError, setSearchError] = useState(null);
   const [shuffling, setShuffling] = useState(false);
   const [queue, setQueue] = useState([]);
 
-  useEffect(() => {
-    handleInstrumentalsRequest();
-  }, [])
-
-  const handleInstrumentalsRequest = () => {
-    rails
-      .get('/instrumentals')
-      .then(response => setInstrumentals(response.data))
-      .catch(error => setError(error));
+  const handleInstrumentalsRequest = response => {
+    setInstrumentals(response);
   };
 
-  const handleFormSubmit = search => {
-    rails
-      .get(`instrumentals/${search}`)
-      .then(response => {
-        if (response.data.data) {
-          setCurrentInstrumental(response.data.data[0])
-          setSearchError(null)
-        } else {
-          setSearchError(response.data.error)
-        }
-      })
-  };
-
-  const handleInstrumentalSelect = selectedInstrumental => {
+  const handleInstrumentalSelect = instrumental => {
     if (currentInstrumental) {
       setPreviousInstrumentals([...previousInstrumentals, currentInstrumental]);
     }
-    setCurrentInstrumental(selectedInstrumental);
+
+    setCurrentInstrumental(instrumental);
     setPlaying(true);
 
     if (shuffling) {
-      return
+      return;
     }
 
-    if (queue.includes(selectedInstrumental)) {
-      setQueue(queue.filter(queueItem => {
-        return queue.indexOf(queueItem) > queue.indexOf(selectedInstrumental);
-      }))
+    if (queue.includes(instrumental)) {
+      setQueue(
+        queue.filter(queueItem => {
+          return queue.indexOf(queueItem) > queue.indexOf(instrumental);
+        })
+      );
     } else {
-      const removedInstrumentals = instrumentals.splice(0, instrumentals.indexOf(selectedInstrumental) + 1)
-      setInstrumentals(instrumentals.concat(removedInstrumentals))
+      const removedInstrumentals = instrumentals.splice(
+        0,
+        instrumentals.indexOf(instrumental) + 1
+      );
+      setInstrumentals(instrumentals.concat(removedInstrumentals));
     }
   };
 
-  const handleInstrumentalEnding = (instrumental) => {
-    let currentInstrumentalIndex;
-    let instrumentalsList;
+  const handleInstrumentalEnding = instrumental => {
     if (shuffling) {
-      setCurrentInstrumental(instrumentals[Math.floor(Math.random() * instrumentals.length)])
+      const randomIndex = Math.floor(Math.random() * instrumentals.length);
+      setCurrentInstrumental(instrumentals[randomIndex]);
     }
 
     if (queue.length !== 0) {
-      setCurrentInstrumental(queue[0])
+      setCurrentInstrumental(queue[0]);
       setPreviousInstrumentals([...previousInstrumentals, queue[0]]);
-      setQueue(queue.filter(queueItem => {
-        return queue[0] !== queueItem;
-      }));
+      handleQueueRemove(queue[0]);
     } else {
-      instrumentalsList = instrumentals
-      setCurrentInstrumental(instrumentalsList[0])
+      setCurrentInstrumental(instrumentals[0]);
       setPreviousInstrumentals([...previousInstrumentals, instrumental]);
       const removedInstrumentals = instrumentals.splice(0, 1);
-      currentInstrumentalIndex = instrumentals.indexOf(instrumental);
       setInstrumentals(instrumentals.concat(removedInstrumentals));
     }
-  }
+  };
 
   const handleInstrumentalPause = () => {
     setPlaying(false);
-  }
+  };
 
   const handleInstrumentalPlay = () => {
     setPlaying(true);
-  }
+  };
 
   const handleInstrumentalFilter = filter => {
     setFilter(filter);
-  }
+  };
 
   const handleFilterReset = () => {
-    setFilter('');
-  }
+    setFilter("");
+  };
 
   const handleQueueAdd = instrumental => {
     setQueue([...queue, instrumental]);
-  }
+  };
 
   const handleQueueRemove = instrumental => {
-    setQueue(queue.filter(queueItem => {
-      return queueItem !== instrumental;
-    }));
-  }
+    setQueue(
+      queue.filter(queueItem => {
+        return queueItem !== instrumental;
+      })
+    );
+  };
 
   const handleQueueReset = () => {
     setQueue([]);
-  }
+  };
 
   const handleNextInstrumental = () => {
     setPreviousInstrumentals([...previousInstrumentals, currentInstrumental]);
 
     if (shuffling) {
-      const randomIndex = Math.floor(Math.random() * instrumentals.length)
-      const chosen = handleInstrumentalSelect(instrumentals[randomIndex])
-      return
+      const randomIndex = Math.floor(Math.random() * instrumentals.length);
+      return handleInstrumentalSelect(instrumentals[randomIndex]);
     }
 
     if (queue.length !== 0) {
-      handleInstrumentalSelect(queue[0])
+      handleInstrumentalSelect(queue[0]);
     } else {
-      handleInstrumentalSelect(instrumentals[0])
+      handleInstrumentalSelect(instrumentals[0]);
     }
-  }
+  };
 
   const handlePreviousInstrumental = () => {
     const lastPlayed = previousInstrumentals[previousInstrumentals.length - 1];
-    handleInstrumentalSelect(lastPlayed)
-    setPreviousInstrumentals(previousInstrumentals.filter(instrumental => {
-      return instrumental !== lastPlayed
-    }))
-  }
+    handleInstrumentalSelect(lastPlayed);
+    setPreviousInstrumentals(
+      previousInstrumentals.filter(instrumental => {
+        return instrumental !== lastPlayed;
+      })
+    );
+  };
 
   const handleInstrumentalShuffle = () => {
     setShuffling(!shuffling);
-  }
+  };
 
   return (
     <>
       <Container>
         <Row>
           <Col xs={{ size: 6, offset: 6 }}>
-            <InstrumentalSearch
-              searchError={searchError}
-              handleFormSubmit={handleFormSubmit}
+            <Instrumental.Search
+              handleInstrumentalSelect={handleInstrumentalSelect}
             />
-            <InstrumentalDetail
+            <Instrumental.Detail
               currentInstrumental={currentInstrumental}
               handleInstrumentalEnding={handleInstrumentalEnding}
               handleInstrumentalPause={handleInstrumentalPause}
@@ -168,7 +141,7 @@ function InstrumentalContainer() {
               playing={playing}
               queue={queue}
             />
-            <InstrumentalQueue
+            <Instrumental.Queue
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalSelect={handleInstrumentalSelect}
               handleQueueAdd={handleQueueAdd}
@@ -177,17 +150,17 @@ function InstrumentalContainer() {
               playing={playing}
               queue={queue}
             />
-            <InstrumentalFilter
+            <Instrumental.Filter
               filter={filter}
               handleInstrumentalFilter={handleInstrumentalFilter}
               handleFilterReset={handleFilterReset}
             />
-            <InstrumentalList
+            <Instrumental.List
               currentInstrumental={currentInstrumental}
-              error={error}
               filter={filter}
               handleFilterReset={handleFilterReset}
               handleInstrumentalPause={handleInstrumentalPause}
+              handleInstrumentalsRequest={handleInstrumentalsRequest}
               handleInstrumentalSelect={handleInstrumentalSelect}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
@@ -198,7 +171,7 @@ function InstrumentalContainer() {
           </Col>
         </Row>
       </Container>
-      <InstrumentalPlayerContainer
+      <Instrumental.PlayerContainer
         handleInstrumentalEnding={handleInstrumentalEnding}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}
@@ -211,7 +184,7 @@ function InstrumentalContainer() {
         shuffling={shuffling}
       />
     </>
-  )
+  );
 }
 
 export { InstrumentalContainer };
