@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 
+import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
+import { currentUser, userSignedIn, redirectToLoginScreen } from '../../utilities';
+import { postInstrumentalLike } from '../../api/instrumentals';
 import * as Instrumental from "./";
 
 function InstrumentalContainer() {
-  const [filter, setFilter] = useState("");
   const [currentInstrumental, setCurrentInstrumental] = useState(null);
+  const [filter, setFilter] = useState("");
   const [instrumentals, setInstrumentals] = useState([]);
+  const [likedInstrumentals, setLikedInstrumentals] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [previousInstrumentals, setPreviousInstrumentals] = useState([]);
   const [shuffling, setShuffling] = useState(false);
   const [queue, setQueue] = useState([]);
 
+
+  const history = useHistory();
+
   const handleInstrumentalsRequest = response => {
     setInstrumentals(response);
+  };
+
+  const handleLikedInstrumentalsRequest = response => {
+    setLikedInstrumentals(response);
   };
 
   const handleInstrumentalSelect = instrumental => {
@@ -123,6 +134,27 @@ function InstrumentalContainer() {
     setShuffling(!shuffling);
   };
 
+  const handleInstrumentalLike = instrumental => {
+    if (!userSignedIn()) {
+      redirectToLoginScreen();
+      history.push("/login");
+    } else {
+      const user = currentUser();
+
+      postInstrumentalLike(instrumental, user, response => {
+        setLikedInstrumentals([...likedInstrumentals, instrumental]);
+      }, error => {
+        console.log(error);
+      })
+    }
+  }
+
+  const isInstrumentalLiked = () => {
+    return likedInstrumentals.filter(likedInstrumental => {
+      return likedInstrumental.title === currentInstrumental.title;
+    }).length === 1
+  }
+
   return (
     <>
       <Container>
@@ -134,10 +166,12 @@ function InstrumentalContainer() {
             <Instrumental.Detail
               currentInstrumental={currentInstrumental}
               handleInstrumentalEnding={handleInstrumentalEnding}
+              handleInstrumentalLike={handleInstrumentalLike}
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalSelect={handleInstrumentalSelect}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
+              isInstrumentalLiked={isInstrumentalLiked}
               playing={playing}
               queue={queue}
             />
@@ -147,6 +181,7 @@ function InstrumentalContainer() {
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               handleQueueReset={handleQueueReset}
+              likedInstrumentals={likedInstrumentals}
               playing={playing}
               queue={queue}
             />
@@ -159,12 +194,15 @@ function InstrumentalContainer() {
               currentInstrumental={currentInstrumental}
               filter={filter}
               handleFilterReset={handleFilterReset}
+              handleInstrumentalLike={handleInstrumentalLike}
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalsRequest={handleInstrumentalsRequest}
               handleInstrumentalSelect={handleInstrumentalSelect}
+              handleLikedInstrumentalsRequest={handleLikedInstrumentalsRequest}
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               instrumentals={instrumentals}
+              likedInstrumentals={likedInstrumentals}
               playing={playing}
               queue={queue}
             />
@@ -172,14 +210,16 @@ function InstrumentalContainer() {
         </Row>
       </Container>
       <Instrumental.PlayerContainer
+        currentInstrumental={currentInstrumental}
         handleInstrumentalEnding={handleInstrumentalEnding}
+        handleInstrumentalLike={handleInstrumentalLike}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleInstrumentalShuffle={handleInstrumentalShuffle}
         handleNextInstrumental={handleNextInstrumental}
         handlePreviousInstrumental={handlePreviousInstrumental}
-        currentInstrumental={currentInstrumental}
+        isInstrumentalLiked={isInstrumentalLiked}
         playing={playing}
         shuffling={shuffling}
       />

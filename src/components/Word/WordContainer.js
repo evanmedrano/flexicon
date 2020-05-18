@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 
 import { WordDetail } from './WordDetail';
-import rails from '../../apis/rails';
+import rails from '../../api/rails';
 
 function WordContainer() {
   const [word, setWord] = useState(null);

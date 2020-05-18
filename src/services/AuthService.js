@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-import rails from '../apis/rails';
+import rails from '../api/rails';
 
 class AuthService {
   register(email, password, password_confirmation) {

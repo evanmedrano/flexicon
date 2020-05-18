@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import rails from '../../../apis/rails';
+import { getInstrumentals, getLikedInstrumentals } from "../../../api/instrumentals";
+import { userSignedIn } from "../../../utilities";
 import * as Instrumental from "../";
 
 function InstrumentalList(props) {
@@ -8,12 +9,15 @@ function InstrumentalList(props) {
     currentInstrumental,
     filter,
     handleFilterReset,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalsRequest,
     handleInstrumentalSelect,
+    handleLikedInstrumentalsRequest,
     handleQueueAdd,
     handleQueueRemove,
     instrumentals,
+    likedInstrumentals,
     playing,
     queue
   } = props;
@@ -24,17 +28,28 @@ function InstrumentalList(props) {
   useEffect(() => {
     setLoading(true);
 
-    rails
-      .get('/instrumentals')
-      .then(response => {
+    getInstrumentals(
+      response => {
         handleInstrumentalsRequest(response.data);
         setLoading(false);
-      })
-      .catch(error => {
+      },
+      error => {
         setError(error);
         setLoading(false);
-      });
-  }, [])
+      }
+    );
+
+    if (userSignedIn()) {
+      getLikedInstrumentals(
+        response => {
+          handleLikedInstrumentalsRequest(response.data);
+        },
+        error => {
+          setError(error);
+        }
+      );
+    }
+  }, []);
 
   if (error) {
     return (
@@ -70,16 +85,21 @@ function InstrumentalList(props) {
 
   const renderedInstrumentals = instrumentalsList.map(instrumental => {
     const activeStyle = "instrumental-item__active";
+    const likedInstrumental = likedInstrumentals.some(likedInstrumental => {
+      return likedInstrumental.title === instrumental.title
+    })
 
     return (
       <Instrumental.ItemContainer
         key={instrumental.id}
         activeClass={instrumental === currentInstrumental ? activeStyle : ""}
-        instrumental={instrumental}
+        handleInstrumentalLike={handleInstrumentalLike}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
+        instrumental={instrumental}
+        likedInstrumental={likedInstrumental}
         playing={playing}
         queueText={
           queue.includes(instrumental) ? "Remove from queue" : "Add to queue"
@@ -99,4 +119,4 @@ function InstrumentalList(props) {
   );
 }
 
-export default InstrumentalList ;
+export default InstrumentalList;

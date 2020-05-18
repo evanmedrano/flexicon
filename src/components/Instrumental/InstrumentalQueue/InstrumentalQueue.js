@@ -10,6 +10,7 @@ function InstrumentalQueue(props) {
     handleQueueAdd,
     handleQueueRemove,
     handleQueueReset,
+    likedInstrumentals,
     playing,
     queue
   } = props;
@@ -20,6 +21,10 @@ function InstrumentalQueue(props) {
 
   const renderedInstrumentals = queue.map(instrumental => {
     const activeStyle = "instrumental-item__active";
+    const likedInstrumental = likedInstrumentals.some(likedInstrumental => {
+      return likedInstrumental.title === instrumental.title;
+    });
+
 
     return (
       <Instrumental.ItemContainer
@@ -30,6 +35,7 @@ function InstrumentalQueue(props) {
         handleQueueAdd={handleQueueAdd}
         handleQueueRemove={handleQueueRemove}
         instrumental={instrumental}
+        likedInstrumental={likedInstrumental}
         playing={playing}
         queueText={
           queue.includes(instrumental) ? "Remove from queue" : "Add to queue"

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 
 import { truncate } from "../../../utilities";
+import InstrumentalLike from "../InstrumentalLike/InstrumentalLike";
 
 function InstrumentalItem(props) {
   const {
@@ -12,12 +13,14 @@ function InstrumentalItem(props) {
     activeClass,
     dropdownNode,
     handleDropdownToggle,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueue,
     handleQueueAdd,
     handleQueueRemove,
     instrumental,
+    likedInstrumental,
     playing,
     rowNode,
     queueText
@@ -69,7 +72,11 @@ function InstrumentalItem(props) {
           />
         </td>
         <td className={`${baseClass}__heart pl-3`}>
-          <FontAwesomeIcon icon={["far", "heart"]} />
+          <InstrumentalLike
+            currentInstrumental={instrumental}
+            handleInstrumentalLike={handleInstrumentalLike}
+            likedInstrumental={likedInstrumental}
+          />
         </td>
         <td className={`pl-3 ${baseClass}__title`}>
           <span>{truncate(instrumental.title, 40)}</span>

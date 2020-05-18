@@ -5,10 +5,12 @@ import * as Instrumental from "../";
 function InstrumentalDetail(props) {
   const {
     currentInstrumental,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
+    isInstrumentalLiked,
     playing,
     queue
   } = props;
@@ -26,11 +28,13 @@ function InstrumentalDetail(props) {
       <Instrumental.Table heading="Now Playing">
         <Instrumental.ItemContainer
           activeClass="instrumental-item__active"
+          handleInstrumentalLike={handleInstrumentalLike}
           handleInstrumentalPause={handleInstrumentalPause}
           handleInstrumentalSelect={handleInstrumentalSelect}
           handleQueueAdd={handleQueueAdd}
           handleQueueRemove={handleQueueRemove}
           instrumental={currentInstrumental}
+          likedInstrumental={isInstrumentalLiked()}
           playing={playing}
           queueText={
             queue.includes(currentInstrumental)

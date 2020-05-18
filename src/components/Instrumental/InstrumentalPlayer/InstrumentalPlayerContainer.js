@@ -6,11 +6,13 @@ function InstrumentalPlayerContainer(props) {
   const {
     currentInstrumental,
     handleInstrumentalEnding,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalPlay,
     handleInstrumentalShuffle,
     handleNextInstrumental,
     handlePreviousInstrumental,
+    isInstrumentalLiked,
     playing,
     shuffling
   } = props;
@@ -58,7 +60,11 @@ function InstrumentalPlayerContainer(props) {
 
   return (
     <div data-testid="instrumental-player" className="instrumental-player-container">
-      <InstrumentalPlayer.Detail currentInstrumental={currentInstrumental} />
+      <InstrumentalPlayer.Detail
+        currentInstrumental={currentInstrumental}
+        handleInstrumentalLike={handleInstrumentalLike}
+        likedInstrumental={isInstrumentalLiked()}
+      />
       <InstrumentalPlayer.AudioControl
         audioElement={audioElement}
         handleInstrumentalLoop={handleInstrumentalLoop}

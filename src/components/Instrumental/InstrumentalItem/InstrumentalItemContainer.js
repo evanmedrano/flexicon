@@ -5,11 +5,13 @@ import InstrumentalItem from "./InstrumentalItem";
 function InstrumentalItemContainer(props) {
   const {
     activeClass,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
     handleQueueRemove,
     instrumental,
+    likedInstrumental,
     playing,
     queueText
   } = props;
@@ -78,10 +80,12 @@ function InstrumentalItemContainer(props) {
       activeClass={activeClass}
       dropdownNode={dropdownNode}
       handleDropdownToggle={handleDropdownToggle}
+      handleInstrumentalLike={handleInstrumentalLike}
       handleInstrumentalPause={handleInstrumentalPause}
       handleInstrumentalSelect={handleInstrumentalSelect}
       handleQueue={handleQueue}
       instrumental={instrumental}
+      likedInstrumental={likedInstrumental}
       playing={playing}
       rowNode={rowNode}
       queueText={queueText}

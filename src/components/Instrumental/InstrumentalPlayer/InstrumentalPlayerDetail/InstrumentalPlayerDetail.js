@@ -1,16 +1,25 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { truncate } from "../../../../utilities";
+import InstrumentalLike from "../../InstrumentalLike/InstrumentalLike";
 
-function InstrumentalPlayerDetail({ currentInstrumental }) {
+function InstrumentalPlayerDetail(props) {
+  const {
+    currentInstrumental,
+    likedInstrumental,
+    handleInstrumentalLike
+  } = props;
+
   return (
     <div className="instrumental-player-detail">
       <span className="mr-4 instrumental-player-detail__title">
         {truncate(currentInstrumental.title, 30)}
       </span>
-      <FontAwesomeIcon icon={['far', 'heart']} />
+      <InstrumentalLike
+        currentInstrumental={currentInstrumental}
+        likedInstrumental={likedInstrumental}
+        handleInstrumentalLike={handleInstrumentalLike}
+      />
     </div>
   )
 }
