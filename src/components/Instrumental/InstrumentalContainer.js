@@ -33,7 +33,17 @@ function InstrumentalContainer() {
   };
 
   const handleLikedInstrumentalsRequest = response => {
-    setLikedInstrumentals(response);
+    const likedInstrumentalCreatedTimes = response.map(res => res.created_at);
+    const instrumentalsLiked = response.map(res => res.instrumental);
+
+    const updatedInstrumentalCreatedTimes = instrumentalsLiked.map(inst => {
+      const indexOfInstrumental = instrumentalsLiked.indexOf(inst);
+      const instrumentalLikedTime = likedInstrumentalCreatedTimes[indexOfInstrumental];
+
+      return Object.assign({}, inst, { created_at: instrumentalLikedTime })
+    })
+
+    setLikedInstrumentals(updatedInstrumentalCreatedTimes);
   };
 
   const handleInstrumentalSelect = instrumental => {
@@ -147,13 +157,7 @@ function InstrumentalContainer() {
       redirectToLoginScreen();
       history.push("/login");
     } else {
-      let likedInstrumental;
-
-      if (instrumentalExists(instrumental)) {
-        likedInstrumental = instrumental;
-      } else {
-        likedInstrumental = instrumentals[instrumentals.length - 1];
-      }
+      const likedInstrumental = getLikedInstrumental(instrumental);
 
       postInstrumentalLike(likedInstrumental, user, response => {
         setLikedInstrumentals([...likedInstrumentals, instrumental]);
@@ -163,15 +167,17 @@ function InstrumentalContainer() {
     }
   }
 
-  const instrumentalExists = instrumental => {
+  const getLikedInstrumental = instrumental => {
     if (instrumentals.includes(instrumental)) {
-      return true;
+      return instrumental;
     } else {
       postInstrumental(instrumental, response => {
         setInstrumentals([...instrumentals, response.data.params])
       }, error => {
         console.log(error);
+        return;
       })
+      return instrumentals[instrumentals.length - 1];
     }
   }
 

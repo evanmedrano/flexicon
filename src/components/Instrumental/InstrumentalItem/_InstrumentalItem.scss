@@ -114,6 +114,10 @@
     @include padding($su-2, null, $su-2, null);
   }
 
+  &__date-added-container {
+    width: 20%;
+  }
+
   &__ellipsis {
     color: $neutral-300;
     visibility: hidden;

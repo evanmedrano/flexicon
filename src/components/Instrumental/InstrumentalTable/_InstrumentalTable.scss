@@ -48,5 +48,6 @@
   &__calendar {
     @include padding($su-1, null, $su-1, null);
     font-size: $fs-5;
+    width: 20%;
   }
 }

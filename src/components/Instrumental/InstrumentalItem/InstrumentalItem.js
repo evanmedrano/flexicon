@@ -83,7 +83,7 @@ function InstrumentalItem(props) {
         <td className={`pl-3 ${baseClass}__title`}>
           <span>{truncate(instrumental.title, 40)}</span>
         </td>
-        <td className="pl-3">
+        <td className={`${baseClass}__date-added-container` + " pl-3"}>
           <span className={`${baseClass}__date-added`}>
             {moment(instrumental.created_at).fromNow()}
           </span>
@@ -107,9 +107,15 @@ function InstrumentalItem(props) {
                 <span>{queueText}</span>
               </li>
               <li className={`${baseClass}__dropdown-item mb-2`}>
-                <span onClick={() => handleInstrumentalLike(instrumental)}>
-                  Save to your Liked Instrumentals
-                </span>
+                {likedInstrumental ? (
+                  <span onClick={() => handleInstrumentalDislike(instrumental)}>
+                    Remove from your Liked Instrumentals
+                  </span>
+                ) : (
+                  <span onClick={() => handleInstrumentalLike(instrumental)}>
+                    Save to your Liked Instrumentals
+                  </span>
+                )}
               </li>
               <hr />
               <li className={`${baseClass}__dropdown-item`}>
