@@ -7,6 +7,7 @@ function InstrumentalPlayerDetail(props) {
   const {
     currentInstrumental,
     likedInstrumental,
+    handleInstrumentalDislike,
     handleInstrumentalLike
   } = props;
 
@@ -18,6 +19,7 @@ function InstrumentalPlayerDetail(props) {
       <InstrumentalLike
         currentInstrumental={currentInstrumental}
         likedInstrumental={likedInstrumental}
+        handleInstrumentalDislike={handleInstrumentalDislike}
         handleInstrumentalLike={handleInstrumentalLike}
       />
     </div>

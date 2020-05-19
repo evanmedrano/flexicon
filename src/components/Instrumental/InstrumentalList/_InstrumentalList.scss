@@ -1,0 +1,15 @@
+.instrumental-list {
+  &__playlist {
+    &:hover {
+      color: $primary-300;
+      cursor: default;
+    }
+  }
+
+  &__all,
+  &__liked {
+    border-bottom: 2px solid $pink-300;
+    color: $primary-300;
+    font-weight: 700;
+  }
+}

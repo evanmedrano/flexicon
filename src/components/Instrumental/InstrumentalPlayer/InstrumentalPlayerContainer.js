@@ -5,6 +5,7 @@ import * as InstrumentalPlayer from './';
 function InstrumentalPlayerContainer(props) {
   const {
     currentInstrumental,
+    handleInstrumentalDislike,
     handleInstrumentalEnding,
     handleInstrumentalLike,
     handleInstrumentalPause,
@@ -62,6 +63,7 @@ function InstrumentalPlayerContainer(props) {
     <div data-testid="instrumental-player" className="instrumental-player-container">
       <InstrumentalPlayer.Detail
         currentInstrumental={currentInstrumental}
+        handleInstrumentalDislike={handleInstrumentalDislike}
         handleInstrumentalLike={handleInstrumentalLike}
         likedInstrumental={isInstrumentalLiked()}
       />

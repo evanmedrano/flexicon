@@ -18,11 +18,13 @@
     visibility: visible;
   }
 
-  &__row:hover &__play-icon {
+  &__row:hover &__play-icon,
+  &__row:hover .instrumental-like__delete {
     display: inline-table;
   }
 
-  &__row:hover &__note-icon {
+  &__row:hover &__note-icon,
+  &__row:hover .instrumental-like__solid-heart {
     display: none;
   }
 

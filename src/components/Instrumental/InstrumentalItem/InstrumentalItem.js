@@ -13,6 +13,7 @@ function InstrumentalItem(props) {
     activeClass,
     dropdownNode,
     handleDropdownToggle,
+    handleInstrumentalDislike,
     handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
@@ -74,6 +75,7 @@ function InstrumentalItem(props) {
         <td className={`${baseClass}__heart pl-3`}>
           <InstrumentalLike
             currentInstrumental={instrumental}
+            handleInstrumentalDislike={handleInstrumentalDislike}
             handleInstrumentalLike={handleInstrumentalLike}
             likedInstrumental={likedInstrumental}
           />
@@ -105,7 +107,9 @@ function InstrumentalItem(props) {
                 <span>{queueText}</span>
               </li>
               <li className={`${baseClass}__dropdown-item mb-2`}>
-                <span>Save to your Liked Instrumentals</span>
+                <span onClick={() => handleInstrumentalLike(instrumental)}>
+                  Save to your Liked Instrumentals
+                </span>
               </li>
               <hr />
               <li className={`${baseClass}__dropdown-item`}>

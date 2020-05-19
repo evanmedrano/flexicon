@@ -5,6 +5,7 @@ import InstrumentalItem from "./InstrumentalItem";
 function InstrumentalItemContainer(props) {
   const {
     activeClass,
+    handleInstrumentalDislike,
     handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
@@ -80,6 +81,7 @@ function InstrumentalItemContainer(props) {
       activeClass={activeClass}
       dropdownNode={dropdownNode}
       handleDropdownToggle={handleDropdownToggle}
+      handleInstrumentalDislike={handleInstrumentalDislike}
       handleInstrumentalLike={handleInstrumentalLike}
       handleInstrumentalPause={handleInstrumentalPause}
       handleInstrumentalSelect={handleInstrumentalSelect}

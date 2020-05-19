@@ -4,13 +4,19 @@ import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 import { currentUser, userSignedIn, redirectToLoginScreen } from '../../utilities';
-import { postInstrumentalLike } from '../../api/instrumentals';
+import {
+  deleteInstrumentalLike,
+  postInstrumental,
+  postInstrumentalLike
+} from '../../api/instrumentals';
+
 import * as Instrumental from "./";
 
 function InstrumentalContainer() {
   const [currentInstrumental, setCurrentInstrumental] = useState(null);
   const [filter, setFilter] = useState("");
   const [instrumentals, setInstrumentals] = useState([]);
+  const [instrumentalsList, setInstrumentalsList] = useState([]);
   const [likedInstrumentals, setLikedInstrumentals] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [previousInstrumentals, setPreviousInstrumentals] = useState([]);
@@ -19,9 +25,11 @@ function InstrumentalContainer() {
 
 
   const history = useHistory();
+  const user = currentUser();
 
   const handleInstrumentalsRequest = response => {
     setInstrumentals(response);
+    setInstrumentalsList(response);
   };
 
   const handleLikedInstrumentalsRequest = response => {
@@ -139,9 +147,15 @@ function InstrumentalContainer() {
       redirectToLoginScreen();
       history.push("/login");
     } else {
-      const user = currentUser();
+      let likedInstrumental;
 
-      postInstrumentalLike(instrumental, user, response => {
+      if (instrumentalExists(instrumental)) {
+        likedInstrumental = instrumental;
+      } else {
+        likedInstrumental = instrumentals[instrumentals.length - 1];
+      }
+
+      postInstrumentalLike(likedInstrumental, user, response => {
         setLikedInstrumentals([...likedInstrumentals, instrumental]);
       }, error => {
         console.log(error);
@@ -149,10 +163,45 @@ function InstrumentalContainer() {
     }
   }
 
+  const instrumentalExists = instrumental => {
+    if (instrumentals.includes(instrumental)) {
+      return true;
+    } else {
+      postInstrumental(instrumental, response => {
+        setInstrumentals([...instrumentals, response.data.params])
+      }, error => {
+        console.log(error);
+      })
+    }
+  }
+
+  const handleInstrumentalDislike = instrumental => {
+    deleteInstrumentalLike(instrumental, response => {
+      setLikedInstrumentals(likedInstrumentals.filter(likedInstrumental => {
+        return likedInstrumental !== instrumental;
+      }));
+    }, error => {
+      console.log(error);
+    })
+  }
+
   const isInstrumentalLiked = () => {
     return likedInstrumentals.filter(likedInstrumental => {
       return likedInstrumental.title === currentInstrumental.title;
     }).length === 1
+  }
+
+  const showLikedInstrumentals = () => {
+    if (!userSignedIn()) {
+      redirectToLoginScreen();
+      history.push("/login");
+    } else {
+      setInstrumentalsList(likedInstrumentals);
+    }
+  }
+
+  const showAllInstrumentals = () => {
+    setInstrumentalsList(instrumentals);
   }
 
   return (
@@ -166,6 +215,7 @@ function InstrumentalContainer() {
             <Instrumental.Detail
               currentInstrumental={currentInstrumental}
               handleInstrumentalEnding={handleInstrumentalEnding}
+              handleInstrumentalDislike={handleInstrumentalDislike}
               handleInstrumentalLike={handleInstrumentalLike}
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalSelect={handleInstrumentalSelect}
@@ -176,6 +226,8 @@ function InstrumentalContainer() {
               queue={queue}
             />
             <Instrumental.Queue
+              handleInstrumentalDislike={handleInstrumentalDislike}
+              handleInstrumentalLike={handleInstrumentalLike}
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalSelect={handleInstrumentalSelect}
               handleQueueAdd={handleQueueAdd}
@@ -194,6 +246,7 @@ function InstrumentalContainer() {
               currentInstrumental={currentInstrumental}
               filter={filter}
               handleFilterReset={handleFilterReset}
+              handleInstrumentalDislike={handleInstrumentalDislike}
               handleInstrumentalLike={handleInstrumentalLike}
               handleInstrumentalPause={handleInstrumentalPause}
               handleInstrumentalsRequest={handleInstrumentalsRequest}
@@ -202,8 +255,11 @@ function InstrumentalContainer() {
               handleQueueAdd={handleQueueAdd}
               handleQueueRemove={handleQueueRemove}
               instrumentals={instrumentals}
+              instrumentalsList={instrumentalsList}
               likedInstrumentals={likedInstrumentals}
               playing={playing}
+              showAllInstrumentals={showAllInstrumentals}
+              showLikedInstrumentals={showLikedInstrumentals}
               queue={queue}
             />
           </Col>
@@ -212,6 +268,7 @@ function InstrumentalContainer() {
       <Instrumental.PlayerContainer
         currentInstrumental={currentInstrumental}
         handleInstrumentalEnding={handleInstrumentalEnding}
+        handleInstrumentalDislike={handleInstrumentalDislike}
         handleInstrumentalLike={handleInstrumentalLike}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalPlay={handleInstrumentalPlay}

@@ -5,6 +5,8 @@ import * as Instrumental from "../";
 function InstrumentalQueue(props) {
   const {
     currentInstrumental,
+    handleInstrumentalDislike,
+    handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalSelect,
     handleQueueAdd,
@@ -30,6 +32,8 @@ function InstrumentalQueue(props) {
       <Instrumental.ItemContainer
         key={instrumental.id}
         activeClass={instrumental === currentInstrumental ? activeStyle : ""}
+        handleInstrumentalDislike={handleInstrumentalDislike}
+        handleInstrumentalLike={handleInstrumentalLike}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
         handleQueueAdd={handleQueueAdd}

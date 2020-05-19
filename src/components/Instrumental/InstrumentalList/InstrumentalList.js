@@ -9,6 +9,7 @@ function InstrumentalList(props) {
     currentInstrumental,
     filter,
     handleFilterReset,
+    handleInstrumentalDislike,
     handleInstrumentalLike,
     handleInstrumentalPause,
     handleInstrumentalsRequest,
@@ -17,8 +18,11 @@ function InstrumentalList(props) {
     handleQueueAdd,
     handleQueueRemove,
     instrumentals,
+    instrumentalsList,
     likedInstrumentals,
     playing,
+    showAllInstrumentals,
+    showLikedInstrumentals,
     queue
   } = props;
 
@@ -59,31 +63,33 @@ function InstrumentalList(props) {
     );
   }
 
-  const filteredInstrumentals = instrumentals.filter(instrumental => {
+  const filteredInstrumentals = instrumentalsList.filter(instrumental => {
     return instrumental.title.toLowerCase().includes(filter.toLowerCase());
   });
 
-  if (filter && filteredInstrumentals.length === 0) {
-    return (
-      <>
-        <tr>
-          <td colSpan="4" className="instrumental-table__no-filter">
-            <span className="mr-2">No results for "{filter}".</span>
-            <span
-              onClick={handleFilterReset}
-              className="instrumental-table__reset"
-            >
-              Remove Filter.
-            </span>
-          </td>
-        </tr>
-      </>
-    );
+  const noFilteredInstrumentals = () => {
+    if (filter && filteredInstrumentals.length === 0) {
+      return (
+        <>
+          <tr>
+            <td colSpan="4" className="instrumental-table__no-filter">
+              <span className="mr-2">No results for "{filter}".</span>
+              <span
+                onClick={handleFilterReset}
+                className="instrumental-table__reset"
+              >
+                Remove Filter.
+              </span>
+            </td>
+          </tr>
+        </>
+      );
+    }
   }
 
-  const instrumentalsList = filter ? filteredInstrumentals : instrumentals;
+  const chosenList = filter ? filteredInstrumentals : instrumentalsList;
 
-  const renderedInstrumentals = instrumentalsList.map(instrumental => {
+  const renderedInstrumentals = chosenList.map(instrumental => {
     const activeStyle = "instrumental-item__active";
     const likedInstrumental = likedInstrumentals.some(likedInstrumental => {
       return likedInstrumental.title === instrumental.title
@@ -93,6 +99,7 @@ function InstrumentalList(props) {
       <Instrumental.ItemContainer
         key={instrumental.id}
         activeClass={instrumental === currentInstrumental ? activeStyle : ""}
+        handleInstrumentalDislike={handleInstrumentalDislike}
         handleInstrumentalLike={handleInstrumentalLike}
         handleInstrumentalPause={handleInstrumentalPause}
         handleInstrumentalSelect={handleInstrumentalSelect}
@@ -108,11 +115,30 @@ function InstrumentalList(props) {
     );
   });
 
+  const all = instrumentalsList === instrumentals ? "all" : ""
+  const liked = instrumentalsList === likedInstrumentals ? "liked" : ""
+
   return (
     <div>
       <h3>{loading ? "Loading your instrumentals..." : ""}</h3>
 
+      <div className="text-right base-font-size mt-4">
+        <span
+          onClick={showAllInstrumentals}
+          className={`instrumental-list__${all}` + " instrumental-list__playlist"}
+        >
+          All instrumentals
+        </span>
+        <span
+          className={`instrumental-list__${liked}` + " ml-4 instrumental-list__playlist"}
+          onClick={showLikedInstrumentals}
+        >
+          Liked instrumentals
+        </span>
+      </div>
+
       <Instrumental.Table heading="Up Next">
+        {noFilteredInstrumentals()}
         {renderedInstrumentals}
       </Instrumental.Table>
     </div>

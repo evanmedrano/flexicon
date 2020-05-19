@@ -41,3 +41,21 @@ export function postData(url, params, callback, errorCallback) {
       }
     });
 }
+
+export function deleteData(url, callback, errorCallback) {
+  rails({
+    method: "delete",
+    url: url,
+    headers: headers
+  })
+    .then(response => {
+      if (callback) {
+        callback(response);
+      }
+    })
+    .catch(error => {
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    });
+}
