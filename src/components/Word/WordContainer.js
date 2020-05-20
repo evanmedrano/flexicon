@@ -2,27 +2,46 @@ import React, { useState, useRef, useEffect } from 'react';
 
 import { Container, Row, Col } from 'reactstrap';
 
-import { WordDetail } from './WordDetail';
-import rails from '../../api/rails';
+import { getWord } from '../../api/words';
+import * as Word from './';
 
 function WordContainer() {
-  const [word, setWord] = useState(null);
   const [error, setError] = useState(null);
+  const [previousWords, setPreviousWords] = useState([]);
+  const [word, setWord] = useState(null);
 
   const intervalId = useRef();
 
   useEffect(() => {
-    handleWordRequest();
-    intervalId.current = setInterval(() => handleWordRequest(), 10000);
+    if (!word) {
+      handleWordRequest();
+    }
+
+    // intervalId.current = setInterval(() => handleWordRequest(), 10000);
     return () => clearInterval(intervalId.current);
-  }, [])
+  }, [word])
 
   const handleWordRequest = () => {
-    rails
-      .get('/words')
-      .then(response => setWord(response.data.word))
-      .catch(error => setError(error));
+    getWord(
+      response => {
+        if (word) {
+          setPreviousWords([...previousWords, word]);
+        }
+
+        setWord(response.data.word);
+      }, error => {
+        setError(error);
+      }
+    )
   };
+
+  const handleWordRepeat = selectedWord => {
+    setWord(selectedWord);
+  }
+
+  const handleWordSkip = () => {
+    handleWordRequest();
+  }
 
   const startWordLoop = () => {
     intervalId.current = setInterval(() => handleWordRequest(), 10000);
@@ -31,18 +50,19 @@ function WordContainer() {
   const stopWordLoop = () => clearInterval(intervalId.current);
 
   return (
-    <Container>
-      <Row>
-        <Col xs="6">
-          <WordDetail
-            error={error}
-            word={word}
-            startWordLoop={startWordLoop}
-            stopWordLoop={stopWordLoop}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <Col xs="6">
+      <Word.Detail
+        error={error}
+        handleWordSkip={handleWordSkip}
+        startWordLoop={startWordLoop}
+        stopWordLoop={stopWordLoop}
+        word={word}
+      />
+      <Word.List
+        handleWordRepeat={handleWordRepeat}
+        previousWords={previousWords}
+      />
+    </Col>
   )
 }
 
