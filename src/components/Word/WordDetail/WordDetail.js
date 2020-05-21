@@ -1,7 +1,14 @@
 import React from 'react';
 
 function WordDetail(props) {
-  const { error, handleWordSkip, word, startWordLoop, stopWordLoop } = props;
+  const {
+    error,
+    handleWordSkip,
+    startWordLoop,
+    stopWordLoop,
+    word,
+    wordMatch
+  } = props;
 
   if (error) {
     return (
@@ -12,10 +19,10 @@ function WordDetail(props) {
   }
 
   return (
-    <div>
+    <div className="word-detail">
       <h2>Current word</h2>
       <br />
-      <h2 className="text-center">
+      <h2 className={wordMatch ? "word-detail__match" : "word-detail__word"}>
         {word === null ? 'Finding your new word' : word}
       </h2>
       <button onClick={stopWordLoop}>Stop</button>
