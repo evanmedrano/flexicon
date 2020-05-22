@@ -48,7 +48,7 @@ function WordList(props) {
     .reverse();
 
   return (
-    <div className="word-list">
+    <div className="word-list d-none d-lg-block">
       <h2 className="mb-4">Previous Words ({previousWords.length} total)</h2>
       <ul className="word-list__list">{words}</ul>
     </div>

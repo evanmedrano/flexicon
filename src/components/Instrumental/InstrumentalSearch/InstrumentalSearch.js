@@ -26,7 +26,7 @@ function InstrumentalSearch({ handleInstrumentalSelect }) {
   };
 
   return (
-    <div className="instrumental-search">
+    <div className="instrumental-search d-none d-lg-block">
       <form onSubmit={handleFormSubmit} className="position-relative">
         <h3 className="instrumental-search__error">{error ? error : ""}</h3>
         <h3>{loading ? "Searching for your instrumental..." : ""}</h3>

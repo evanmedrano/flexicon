@@ -18,14 +18,14 @@ function InstrumentalDetail(props) {
 
   if (!currentInstrumental) {
     return (
-      <h4 className="mt-3 ml-4">
+      <h4 className="mt-5 text-center">
         Please select an instrumental to get started
       </h4>
     );
   }
 
   return (
-    <div>
+    <div className="mt-5 mt-lg-0">
       <Instrumental.Table heading="Now Playing">
         <Instrumental.ItemContainer
           activeClass="instrumental-item__active"

@@ -19,8 +19,8 @@ function WordDetail(props) {
     )
   }
 
-  const baseHoverClass = "word-detail__word-hover";
-  const wordHoverClass = wordMatch ? `${baseHoverClass}--match` : baseHoverClass
+  const hoverClass = "word-detail__word-hover";
+  const wordHoverClass = wordMatch ? `${hoverClass}--match` : hoverClass;
 
   return (
     <div className="word-detail">

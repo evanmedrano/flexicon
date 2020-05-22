@@ -1,7 +1,11 @@
 .footer {
-  @include padding($su-10, null, $su-6, null);
+  @include padding($su-6, null, $su-6, null);
   font-size: $fs-5;
   text-align: center;
+
+  @include respond-to('lg') {
+    @include padding($su-8, null, $su-8, null);
+  }
 
   &__headline {
     font-size: $fs-7;

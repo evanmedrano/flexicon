@@ -7,3 +7,8 @@
 @import './InstrumentalSearch/InstrumentalSearch';
 @import './InstrumentalTable/InstrumentalTable';
 @import './InstrumentalQueue/InstrumentalQueue';
+
+.instrumental-container {
+  @include margin(null, auto, null, auto);
+  max-width: 57rem;
+}

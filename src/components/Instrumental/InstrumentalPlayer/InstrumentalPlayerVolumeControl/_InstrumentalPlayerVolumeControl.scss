@@ -1,9 +1,14 @@
 .instrumental-player-volume-control {
-  @include padding(null, $su-6, null, $su-6);
+  @include padding(null, null, null, $su-8);
   align-items: center;
   display: flex;
   text-align: center;
-  width: 23%;
+  width: 100%;
+
+  @include respond-to('md') {
+    @include padding(null, $su-6, null, $su-6);
+    width: 25%;
+  }
 
   &:hover .instrumental-player-slider__state {
     background-color: $primary-300;

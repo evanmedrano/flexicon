@@ -1,9 +1,14 @@
 .instrumental-player-audio-control {
-  @include padding(null, $su-6, null, $su-6);
+  @include padding(null, null, null, $su-4);
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 45%;
+  width: 100%;
+
+  @include respond-to('md') {
+    @include padding(null, $su-6, null, $su-6);
+    width: 45%;
+  }
 
   &:hover {
     cursor: default;

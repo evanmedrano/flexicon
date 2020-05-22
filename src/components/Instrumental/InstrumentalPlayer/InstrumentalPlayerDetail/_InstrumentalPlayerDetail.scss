@@ -1,4 +1,9 @@
 .instrumental-player-detail {
+  display: none;
   text-align: center;
-  width: 23%;
+  width: 25%;
+
+  @include respond-to('md') {
+    display: block;
+  }
 }

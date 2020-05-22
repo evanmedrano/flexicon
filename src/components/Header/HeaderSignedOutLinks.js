@@ -8,7 +8,7 @@ function HeaderSignedOutLinks() {
       <NavLink to={"/login"} className="nav-link">
         log in
       </NavLink>
-      <NavLink to={"/signup"} className="nav-link ml-4">
+      <NavLink to={"/signup"} className="nav-link ml-lg-4">
         sign up
       </NavLink>
     </>

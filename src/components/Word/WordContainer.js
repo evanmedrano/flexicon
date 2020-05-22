@@ -76,32 +76,28 @@ function WordContainer() {
   }
 
   return (
-    <Col xs="6" className="pl-0">
-      <div>
-        <Word.Recognition
-          handleWordMatch={handleWordMatch}
-          looping={looping}
-          word={word}
-        />
-        <div className="d-flex flex-column w-100">
-          <Word.Detail
-            error={error}
-            handleWordSkip={handleWordSkip}
-            looping={looping}
-            startWordLoop={startWordLoop}
-            stopWordLoop={stopWordLoop}
-            word={word}
-            wordMatch={wordMatch}
-          />
-          <Word.List
-            handleWordRepeat={handleWordRepeat}
-            matchedWords={matchedWords}
-            previousWords={previousWords}
-            skippedWords={skippedWords}
-            word={word}
-          />
-        </div>
-      </div>
+    <Col xs="12" lg="6" className="sticky-top pl-4 pl-lg-0">
+      <Word.Recognition
+        handleWordMatch={handleWordMatch}
+        looping={looping}
+        word={word}
+      />
+      <Word.Detail
+        error={error}
+        handleWordSkip={handleWordSkip}
+        looping={looping}
+        startWordLoop={startWordLoop}
+        stopWordLoop={stopWordLoop}
+        word={word}
+        wordMatch={wordMatch}
+      />
+      <Word.List
+        handleWordRepeat={handleWordRepeat}
+        matchedWords={matchedWords}
+        previousWords={previousWords}
+        skippedWords={skippedWords}
+        word={word}
+      />
     </Col>
   )
 }
