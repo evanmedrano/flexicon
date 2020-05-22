@@ -38,4 +38,6 @@ function WordRecognition(props) {
   return null;
 }
 
+const options = { autoStart: false };
+
 export default SpeechRecognition(WordRecognition);
