@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function WordList(props) {
   const {
@@ -29,31 +29,30 @@ function WordList(props) {
     }
 
     return wordListClass;
-  }
+  };
 
   const uniquePreviousWords = [...new Set(previousWords)];
 
-  const words = uniquePreviousWords.map(previousWord => {
-    return (
-      <li
-        key={previousWord}
-        onClick={() => handleWordRepeat(previousWord)}
-        className={wordStyle(previousWord)}
-      >
-        {previousWord}
-      </li>
-    );
-  });
-
+  const words = uniquePreviousWords
+    .map(previousWord => {
+      return (
+        <li
+          key={previousWord}
+          onClick={() => handleWordRepeat(previousWord)}
+          className={wordStyle(previousWord)}
+        >
+          {previousWord}
+        </li>
+      );
+    })
+    .reverse();
 
   return (
     <div className="word-list">
-      <h2 className="word-list__headline">Previous Words</h2>
-      <ul className="word-list__list">
-        {words}
-      </ul>
+      <h2 className="mb-4">Previous Words ({previousWords.length} total)</h2>
+      <ul className="word-list__list">{words}</ul>
     </div>
-  )
+  );
 }
 
 export default WordList;

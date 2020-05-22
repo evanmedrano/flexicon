@@ -1,5 +1,7 @@
 .word-list {
+  @include margin($su-8, null, null, null);
   font-size: $fs-4;
+  text-align: center;
 
   &__list {
     @include padding($su-2, null, null, null);
@@ -19,11 +21,13 @@
     break-inside: avoid;
     color: $neutral-500;
     -webkit-column-break-inside: avoid;
+    line-style-position: inside;
     page-break-inside: avoid;
-    width: fit-content;
+    transition: all .3s;
 
     &:hover {
-      cursor: pointer;
+      cursor: default;
+      transform: translateX(3px);
     }
   }
 

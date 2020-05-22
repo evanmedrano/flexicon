@@ -4,8 +4,14 @@
   flex-direction: column;
   justify-content: center;
 
-  &:hover &__word-hover {
+  &:hover &__headline::after {
+    content: " - ";
+  }
+
+  &:hover &__word-hover,
+  &:hover &__word-hover--match {
     display: inline-block;
+    font-weight: 700;
   }
 
   &:hover &__word,
@@ -17,15 +23,25 @@
     display: block;
   }
 
-  &__word-hover {
+  &__word,
+  &__match {
+    @include margin($su-6, null, null, null);
+    font-size: $fs-7;
+    font-weight: 700;
+  }
+
+  &__word-hover,
+  &__word-hover--match {
     display: none;
   }
 
-  &__match {
+  &__match,
+  &__word-hover--match {
     color: $primary-300;
   }
 
   &__buttons {
+    @include margin($su-6, null, null, null);
     display: none;
     font-size: $fs-4;
   }

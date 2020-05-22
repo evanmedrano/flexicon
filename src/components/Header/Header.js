@@ -41,16 +41,6 @@ function Header({ handlePageChange, handleLogout, pageColor, isLight }) {
                   {currentPageColor}
                 </a>
               </NavItem>
-              <NavItem>
-                <NavLink className="mr-4 nav-link" to={"/brain-dump"}>
-                  brain dump
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink className="mr-4 nav-link" to={"/word-play"}>
-                  word play
-                </NavLink>
-              </NavItem>
             </Nav>
             <div className="navbar-nav">
               {userSignedIn() ? (

@@ -19,11 +19,18 @@ function WordDetail(props) {
     )
   }
 
+  const baseHoverClass = "word-detail__word-hover";
+  const wordHoverClass = wordMatch ? `${baseHoverClass}--match` : baseHoverClass
+
   return (
     <div className="word-detail">
-      <h2 className="word-detail__headline mb-4">
-        Current word
-        <span className="word-detail__word-hover ml-2">- {word}</span>
+      <h2 className="mb-4">
+        <span className="word-detail__headline">
+          Current word
+        </span>
+        <span className={wordHoverClass}>
+          {word}
+        </span>
       </h2>
 
       <div className="word-detail__word-container">

@@ -212,7 +212,7 @@ function InstrumentalContainer() {
 
   return (
     <>
-      <Col xs="6">
+      <Col xs="6" className="pr-0">
         <Instrumental.Search
           handleInstrumentalSelect={handleInstrumentalSelect}
         />

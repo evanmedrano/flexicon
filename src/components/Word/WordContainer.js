@@ -76,7 +76,7 @@ function WordContainer() {
   }
 
   return (
-    <Col xs="6">
+    <Col xs="6" className="pl-0">
       <div>
         <Word.Recognition
           handleWordMatch={handleWordMatch}
