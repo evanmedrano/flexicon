@@ -1,6 +1,37 @@
 .word-detail {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &:hover &__word-hover {
+    display: inline-block;
+  }
+
+  &:hover &__word,
+  &:hover &__match {
+    display: none;
+  }
+
+  &:hover  &__buttons {
+    display: block;
+  }
+
+  &__word-hover {
+    display: none;
+  }
+
   &__match {
     color: $primary-300;
+  }
+
+  &__buttons {
+    display: none;
+    font-size: $fs-4;
+  }
+
+  &__buttons .button {
+    @include padding($su-3, $su-6, $su-3, $su-6);
   }
 }
 

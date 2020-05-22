@@ -1,5 +1,46 @@
 .word-list {
-  &__skipped {
+  font-size: $fs-4;
+
+  &__list {
+    @include padding($su-2, null, null, null);
+    -moz-columns: 2;
+    -webkit-columns: 2;
+    columns: 2;
+    column-gap: 3rem;
+    list-style: none;
+    margin: 0;
+  }
+
+  &__word {
+    @include margin(null, null, $su-2, null);
+    @include padding($su-2, $su-4, $su-2, $su-4);
+    background-color: $neutral-200;
+    border-radius: 2rem;
+    break-inside: avoid;
+    color: $neutral-500;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    width: fit-content;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__word--matched {
+    background-color: $primary-200;
+  }
+
+  &__word--repeated {
+    background-color: $pink-100;
+  }
+
+  &__word--skipped {
+    background-color: $neutral-300;
     font-style: italic;
+
+    &::after {
+      content: " (skipped)";
+    }
   }
 }

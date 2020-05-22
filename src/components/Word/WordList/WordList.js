@@ -1,32 +1,55 @@
 import React from 'react';
 
-function WordList({ handleWordRepeat, previousWords, skippedWords }) {
+function WordList(props) {
+  const {
+    handleWordRepeat,
+    matchedWords,
+    previousWords,
+    skippedWords,
+    word
+  } = props;
+
   if (previousWords.length === 0) {
     return null;
   }
 
-  const words = previousWords.map(word => {
-    const wordRepeatCount = previousWords.filter(repeatedWord => {
-      return repeatedWord === word;
-    }).length
+  const wordStyle = previousWord => {
+    let wordListClass = "word-list__word";
 
+    switch (true) {
+      case matchedWords.includes(previousWord):
+        wordListClass = `${wordListClass} ${wordListClass}--matched`;
+        break;
+      case skippedWords.includes(previousWord):
+        wordListClass = `${wordListClass} ${wordListClass}--skipped`;
+        break;
+      case previousWord === word:
+        wordListClass = `${wordListClass} ${wordListClass}--repeated`;
+        break;
+    }
+
+    return wordListClass;
+  }
+
+  const uniquePreviousWords = [...new Set(previousWords)];
+
+  const words = uniquePreviousWords.map(previousWord => {
     return (
       <li
-        key={word}
-        onClick={() => handleWordRepeat(word)}
-        className={
-          skippedWords.includes(word) ? "word-list__skipped" : "word-list__word"
-        }
+        key={previousWord}
+        onClick={() => handleWordRepeat(previousWord)}
+        className={wordStyle(previousWord)}
       >
-        {wordRepeatCount > 1 ? `${word} x ${wordRepeatCount}` : word}
+        {previousWord}
       </li>
     );
   });
 
+
   return (
-    <div>
-      <h2>Previous Words</h2>
-      <ul>
+    <div className="word-list">
+      <h2 className="word-list__headline">Previous Words</h2>
+      <ul className="word-list__list">
         {words}
       </ul>
     </div>

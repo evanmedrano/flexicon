@@ -7,6 +7,8 @@ import * as Word from './';
 
 function WordContainer() {
   const [error, setError] = useState(null);
+  const [looping, setLooping] = useState(true);
+  const [matchedWords, setMatchedWords] = useState([]);
   const [previousWords, setPreviousWords] = useState([]);
   const [skippedWords, setSkippedWords] = useState([]);
   const [word, setWord] = useState(null);
@@ -19,7 +21,10 @@ function WordContainer() {
       handleWordRequest();
     }
 
-    intervalId.current = setInterval(() => handleWordRequest(), 10000);
+    if (looping) {
+      intervalId.current = setInterval(() => handleWordRequest(), 5000);
+    }
+
     return () => clearInterval(intervalId.current);
   }, [word])
 
@@ -29,6 +34,7 @@ function WordContainer() {
         if (word) {
           setPreviousWords([...previousWords, word]);
         }
+
         setWord(response.data.word);
         setWordMatch(false);
       }, error => {
@@ -42,6 +48,10 @@ function WordContainer() {
       return skippedWord !== selectedWord;
     }));
 
+    setMatchedWords(matchedWords.filter(matchedWord => {
+      return matchedWord !== selectedWord;
+    }));
+
     setWord(selectedWord);
   }
 
@@ -51,34 +61,47 @@ function WordContainer() {
   }
 
   const handleWordMatch = () => {
+    setMatchedWords([...matchedWords, word]);
     setWordMatch(true);
   }
 
   const startWordLoop = () => {
-    intervalId.current = setInterval(() => handleWordRequest(), 10000);
+    intervalId.current = setInterval(() => handleWordRequest(), 5000);
+    setLooping(true);
   };
 
-  const stopWordLoop = () => clearInterval(intervalId.current);
+  const stopWordLoop = () => {
+    setLooping(false);
+    return () => clearInterval(intervalId.current);
+  }
 
   return (
     <Col xs="6">
-      <Word.Recognition
-        handleWordMatch={handleWordMatch}
-        word={word}
-      />
-      <Word.Detail
-        error={error}
-        handleWordSkip={handleWordSkip}
-        startWordLoop={startWordLoop}
-        stopWordLoop={stopWordLoop}
-        word={word}
-        wordMatch={wordMatch}
-      />
-      <Word.List
-        handleWordRepeat={handleWordRepeat}
-        previousWords={previousWords}
-        skippedWords={skippedWords}
-      />
+      <div>
+        <Word.Recognition
+          handleWordMatch={handleWordMatch}
+          looping={looping}
+          word={word}
+        />
+        <div className="d-flex flex-column w-100">
+          <Word.Detail
+            error={error}
+            handleWordSkip={handleWordSkip}
+            looping={looping}
+            startWordLoop={startWordLoop}
+            stopWordLoop={stopWordLoop}
+            word={word}
+            wordMatch={wordMatch}
+          />
+          <Word.List
+            handleWordRepeat={handleWordRepeat}
+            matchedWords={matchedWords}
+            previousWords={previousWords}
+            skippedWords={skippedWords}
+            word={word}
+          />
+        </div>
+      </div>
     </Col>
   )
 }
